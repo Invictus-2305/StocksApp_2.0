@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Manage Users - Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00daf3",
+                        "primary-container": "#009fb2",
+                        "on-primary": "#00363d",
+                        "tertiary": "#3ce36a",
+                        "on-tertiary": "#003912",
+                        "error": "#ffb4ab",
+                        "on-error": "#690005",
+                        "surface": "#0f1419",
+                        "surface-container": "#1b2025",
+                        "surface-container-low": "#171c21",
+                        "surface-container-high": "#252a30",
+                        "surface-container-highest": "#30353b",
+                        "surface-container-lowest": "#0a0f14",
+                        "on-surface": "#dee3ea",
+                        "on-surface-variant": "#c1c6d7",
+                        "outline": "#8b90a0",
+                        "outline-variant": "#414755",
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #414755; border-radius: 2px; }
+        @keyframes row-appear {
+            0% { opacity: 0; transform: translateY(-8px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .row-new { animation: row-appear 0.3s ease-out forwards; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body overflow-hidden">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col pt-4 pb-8 bg-[#171c21] h-screen w-64 border-r border-[#414755]/15 transition-all duration-200 ease-in-out">
+    <nav class="flex-1 px-4 space-y-1">
+        <a class="flex items-center gap-3 px-4 py-3 text-[#c1c6d7] opacity-70 hover:bg-[#1b2025] hover:text-[#00daf3] transition-all duration-200 ease-in-out" href="/dashboard">
+            <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+            <span class="font-['Inter'] text-sm tracking-tight">Dashboard</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-3 bg-[#1b2025] text-[#00daf3] border-r-4 border-[#00daf3] font-semibold transition-all duration-200 ease-in-out" href="/admin/users">
+            <span class="material-symbols-outlined" data-icon="group">group</span>
+            <span class="font-['Inter'] text-sm tracking-tight">Manage Users</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-3 text-[#c1c6d7] opacity-70 hover:bg-[#1b2025] hover:text-[#00daf3] transition-all duration-200 ease-in-out" href="/admin/brokers">
+            <span class="material-symbols-outlined" data-icon="public">public</span>
+            <span class="font-['Inter'] text-sm tracking-tight">Manage Brokers</span>
+        </a>
+    </nav>
+    <div class="px-4 border-t border-outline-variant/10 pt-4 space-y-1">
+        <a class="flex items-center gap-3 px-4 py-3 text-[#c1c6d7] opacity-70 hover:bg-[#1b2025] hover:text-[#00daf3] transition-all duration-200 ease-in-out" href="javascript:void(0)" onclick="alert('For support, reach out to the admin.')">
+            <span class="material-symbols-outlined" data-icon="help">help</span>
+            <span class="font-['Inter'] text-sm tracking-tight">Support</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-3 text-[#c1c6d7] opacity-70 hover:bg-[#1b2025] hover:text-[#00daf3] transition-all duration-200 ease-in-out" href="/api/logout">
+            <span class="material-symbols-outlined" data-icon="logout">logout</span>
+            <span class="font-['Inter'] text-sm tracking-tight">Logout</span>
+        </a>
+    </div>
+</aside>
+
+<!-- Main Content -->
+<main class="ml-64 h-screen flex flex-col">
+    <!-- Header -->
+    <header class="flex justify-between items-center w-full px-8 py-4 bg-[#0f1419]">
+        <div class="flex items-center gap-4">
+            <h1 class="font-headline font-extrabold text-xl text-on-surface">User Management</h1>
+            <div class="h-6 w-[1px] bg-outline-variant/20"></div>
+            <span class="text-xs font-medium text-on-surface-variant bg-surface-container px-3 py-1.5 rounded-full border border-outline-variant/10">Admin Panel</span>
+        </div>
+    </header>
+
+    <section class="flex-1 overflow-hidden p-8 space-y-8 bg-surface flex flex-col">
+        <!-- Add User Card -->
+        <div class="bg-surface-container-low rounded-xl border border-outline-variant/5 p-6">
+            <h2 class="font-headline font-bold text-base text-on-surface mb-5 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-lg">person_add</span>
+                Add New User
+            </h2>
+            <form id="add-user-form" class="flex items-end gap-4">
+                <div class="flex-1 space-y-2">
+                    <label class="block text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Username</label>
+                    <input id="new-username" class="w-full bg-[#1b2025] border border-outline-variant/10 rounded-xl px-4 py-3 text-sm text-on-surface focus:ring-1 focus:ring-primary focus:border-primary transition-all" type="text" placeholder="e.g. trader_john" required/>
+                </div>
+                <div class="flex-1 space-y-2">
+                    <label class="block text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Password</label>
+                    <input id="new-password" class="w-full bg-[#1b2025] border border-outline-variant/10 rounded-xl px-4 py-3 text-sm text-on-surface focus:ring-1 focus:ring-primary focus:border-primary transition-all" type="password" placeholder="Minimum 6 characters" required/>
+                </div>
+                <div class="w-40 space-y-2">
+                    <label class="block text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Role</label>
+                    <select id="new-role" class="w-full bg-[#1b2025] border border-outline-variant/10 rounded-xl px-4 py-3 text-sm text-on-surface focus:ring-1 focus:ring-primary focus:border-primary transition-all">
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <button type="submit" class="bg-gradient-to-r from-primary to-primary-container text-on-primary px-6 py-3 rounded-xl font-body text-xs font-extrabold shadow-[0_16px_32px_-8px_rgba(0,218,243,0.3)] active:scale-95 transition-all whitespace-nowrap flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm">add</span> Add User
+                </button>
+            </form>
+        </div>
+
+        <!-- Users Table -->
+        <div class="bg-surface-container-low rounded-xl overflow-hidden flex flex-col flex-1 border border-outline-variant/5">
+            <div class="flex-1 overflow-auto custom-scrollbar">
+                <table class="w-full text-left">
+                    <thead class="sticky top-0 bg-surface-container-low z-10">
+                        <tr class="text-white text-[11px] uppercase tracking-widest font-bold border-b border-outline-variant/10">
+                            <th class="py-5 px-6">Username</th>
+                            <th class="py-5 px-6">Role</th>
+                            <th class="py-5 px-6">Broker</th>
+                            <th class="py-5 px-6">Execution</th>
+                            <th class="py-5 px-6">Created</th>
+                            <th class="py-5 px-6 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-tbody" class="text-sm font-medium text-white">
+                        <!-- Rows injected dynamically -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="px-8 py-4 bg-[#1b2025] flex justify-between items-center text-[11px] font-bold tracking-widest text-on-surface-variant border-t border-outline-variant/10">
+                <span>TOTAL USERS: <span id="user-count">0</span></span>
+                <span class="text-primary">● ADMIN PANEL</span>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Toast -->
+<div id="toast" class="fixed bottom-8 right-8 z-[100] max-w-sm w-full bg-surface-container-highest rounded-xl p-5 shadow-[0_32px_64px_-12px_rgba(0,0,0,0.5)] border-l-4 border-tertiary transform translate-y-24 opacity-0 transition-all duration-500 pointer-events-none">
+    <div class="flex items-start gap-4">
+        <div class="bg-tertiary/10 p-2 rounded-lg">
+            <span class="material-symbols-outlined text-tertiary">task_alt</span>
+        </div>
+        <div>
+            <h5 id="toast-title" class="text-on-surface font-bold text-sm">Success</h5>
+            <p id="toast-msg" class="text-on-surface-variant text-xs mt-1"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    const tbody = document.getElementById('users-tbody');
+    const userCount = document.getElementById('user-count');
+
+    function showToast(title, msg) {
+        const t = document.getElementById('toast');
+        document.getElementById('toast-title').textContent = title;
+        document.getElementById('toast-msg').textContent = msg;
+        t.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+        t.classList.add('translate-y-0', 'opacity-100');
+        setTimeout(() => {
+            t.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+            t.classList.remove('translate-y-0', 'opacity-100');
+        }, 3000);
+    }
+
+    function createRow(u) {
+        const tr = document.createElement('tr');
+        tr.className = 'group hover:bg-surface-container-highest/30 transition-colors border-b border-outline-variant/5 row-new';
+        const isAdmin = u.role === 'admin';
+        const broker = u.broker_config?.broker_preference || '—';
+        const execStatus = u.execution_enabled;
+        const created = u.created_at ? new Date(u.created_at).toLocaleDateString('en-IN', {day: '2-digit', month: 'short', year: 'numeric'}) : '—';
+
+        tr.innerHTML = `
+            <td class="px-6 py-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-${isAdmin ? 'primary' : 'surface-container-high'} flex items-center justify-center">
+                        <span class="material-symbols-outlined text-sm ${isAdmin ? 'text-on-primary' : 'text-on-surface-variant'}">${isAdmin ? 'shield_person' : 'person'}</span>
+                    </div>
+                    <span class="font-headline font-bold">${u.username}</span>
+                </div>
+            </td>
+            <td class="px-6 py-4">
+                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${isAdmin ? 'bg-primary/15 text-primary' : 'bg-surface-container-high text-on-surface-variant'}">${u.role}</span>
+            </td>
+            <td class="px-6 py-4 text-on-surface-variant">${isAdmin ? '—' : broker}</td>
+            <td class="px-6 py-4">
+                ${isAdmin ? '<span class="text-on-surface-variant text-xs">Global control</span>' :
+                  `<span class="flex items-center gap-1.5 text-xs font-semibold ${execStatus ? 'text-tertiary' : 'text-error'}">
+                    <span class="w-2 h-2 rounded-full ${execStatus ? 'bg-tertiary' : 'bg-error'}"></span>
+                    ${execStatus ? 'ACTIVE' : 'STOPPED'}
+                  </span>`}
+            </td>
+            <td class="px-6 py-4 text-on-surface-variant text-xs">${created}</td>
+            <td class="px-6 py-4 text-right">
+                ${isAdmin ? '' : `<button onclick="deleteUser('${u.username}')" class="p-2 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-lg transition-all" title="Delete user">
+                    <span class="material-symbols-outlined text-lg">delete</span>
+                </button>`}
+            </td>
+        `;
+        return tr;
+    }
+
+    async function loadUsers() {
+        try {
+            const res = await fetch('/api/users');
+            if (!res.ok) return;
+            const users = await res.json();
+            tbody.innerHTML = '';
+            userCount.textContent = users.length;
+            users.forEach(u => tbody.appendChild(createRow(u)));
+        } catch(e) {
+            console.error('Failed to load users:', e);
+        }
+    }
+
+    async function deleteUser(username) {
+        if (!confirm(`Are you sure you want to delete "${username}"? This cannot be undone.`)) return;
+        try {
+            const res = await fetch(`/api/users/${username}`, { method: 'DELETE' });
+            if (res.ok) {
+                showToast('User Deleted', `"${username}" has been removed.`);
+                loadUsers();
+            } else {
+                const err = await res.json();
+                alert(err.detail || 'Failed to delete user.');
+            }
+        } catch(e) {
+            alert('Connection error.');
+        }
+    }
+
+    document.getElementById('add-user-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const username = document.getElementById('new-username').value.trim();
+        const password = document.getElementById('new-password').value;
+        const role = document.getElementById('new-role').value;
+
+        if (username.length < 3) { alert('Username must be at least 3 characters.'); return; }
+        if (password.length < 6) { alert('Password must be at least 6 characters.'); return; }
+
+        try {
+            const res = await fetch('/api/users', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ username, password, role })
+            });
+            if (res.ok) {
+                showToast('User Created', `"${username}" can now log in.`);
+                document.getElementById('new-username').value = '';
+                document.getElementById('new-password').value = '';
+                document.getElementById('new-role').value = 'user';
+                loadUsers();
+            } else {
+                const err = await res.json();
+                alert(err.detail || 'Failed to create user.');
+            }
+        } catch(e) {
+            alert('Connection error.');
+        }
+    });
+
+    loadUsers();
+</script>
+</body>
+</html>

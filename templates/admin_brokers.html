@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Manage Brokers - Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00daf3",
+                        "primary-container": "#009fb2",
+                        "on-primary": "#00363d",
+                        "tertiary": "#3ce36a",
+                        "on-tertiary": "#003912",
+                        "error": "#ffb4ab",
+                        "on-error": "#690005",
+                        "surface": "#0f1419",
+                        "surface-container": "#1b2025",
+                        "surface-container-low": "#171c21",
+                        "surface-container-high": "#252a30",
+                        "surface-container-highest": "#30353b",
+                        "surface-container-lowest": "#0a0f14",
+                        "on-surface": "#dee3ea",
+                        "on-surface-variant": "#c1c6d7",
+                        "outline": "#8b90a0",
+                        "outline-variant": "#414755",
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #414755; border-radius: 2px; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body overflow-hidden">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col pt-4 pb-8 bg-[#171c21] h-screen w-64 border-r border-[#414755]/15 transition-all duration-200 ease-in-out">
+    <nav class="flex-1 px-4 space-y-1">
+        <a class="flex items-center gap-3 px-4 py-3 text-[#c1c6d7] opacity-70 hover:bg-[#1b2025] hover:text-[#00daf3] transition-all duration-200 ease-in-out" href="/dashboard">
+            <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+            <span class="font-['Inter'] text-sm tracking-tight">Dashboard</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-3 text-[#c1c6d7] opacity-70 hover:bg-[#1b2025] hover:text-[#00daf3] transition-all duration-200 ease-in-out" href="/admin/users">
+            <span class="material-symbols-outlined" data-icon="group">group</span>
+            <span class="font-['Inter'] text-sm tracking-tight">Manage Users</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-3 bg-[#1b2025] text-[#00daf3] border-r-4 border-[#00daf3] font-semibold transition-all duration-200 ease-in-out" href="/admin/brokers">
+            <span class="material-symbols-outlined" data-icon="public">public</span>
+            <span class="font-['Inter'] text-sm tracking-tight">Manage Brokers</span>
+        </a>
+    </nav>
+    <div class="px-4 border-t border-outline-variant/10 pt-4 space-y-1">
+        <a class="flex items-center gap-3 px-4 py-3 text-[#c1c6d7] opacity-70 hover:bg-[#1b2025] hover:text-[#00daf3] transition-all duration-200 ease-in-out" href="javascript:void(0)" onclick="alert('For support, reach out to the admin.')">
+            <span class="material-symbols-outlined" data-icon="help">help</span>
+            <span class="font-['Inter'] text-sm tracking-tight">Support</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-3 text-[#c1c6d7] opacity-70 hover:bg-[#1b2025] hover:text-[#00daf3] transition-all duration-200 ease-in-out" href="/api/logout">
+            <span class="material-symbols-outlined" data-icon="logout">logout</span>
+            <span class="font-['Inter'] text-sm tracking-tight">Logout</span>
+        </a>
+    </div>
+</aside>
+
+<!-- Main Content -->
+<main class="ml-64 h-screen flex flex-col">
+    <!-- Header -->
+    <header class="flex justify-between items-center w-full px-8 py-4 bg-[#0f1419]">
+        <div class="flex items-center gap-4">
+            <h1 class="font-headline font-extrabold text-xl text-on-surface">Broker Management</h1>
+            <div class="h-6 w-[1px] bg-outline-variant/20"></div>
+            <span class="text-xs font-medium text-on-surface-variant bg-surface-container px-3 py-1.5 rounded-full border border-outline-variant/10">Admin Panel</span>
+        </div>
+    </header>
+
+    <section class="flex-1 overflow-hidden p-8 space-y-8 bg-surface flex flex-col">
+        <!-- BROKERS TAB -->
+        <div id="tab-content-brokers" class="flex-1 flex flex-col overflow-hidden">
+            <div class="bg-surface-container-low rounded-xl border border-outline-variant/5 p-6 mb-6">
+                <h2 class="font-headline font-bold text-base text-on-surface mb-2 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary text-lg">public</span>
+                    Global Broker Enablers
+                </h2>
+                <p class="text-xs text-on-surface-variant">Toggle which brokers are globally active. Disabled brokers will be hidden from users, and any active signals for them will be halted.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-y-auto custom-scrollbar pb-6" id="brokers-grid">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Toast -->
+<div id="toast" class="fixed bottom-8 right-8 z-[100] max-w-sm w-full bg-surface-container-highest rounded-xl p-5 shadow-[0_32px_64px_-12px_rgba(0,0,0,0.5)] border-l-4 border-tertiary transform translate-y-24 opacity-0 transition-all duration-500 pointer-events-none">
+    <div class="flex items-start gap-4">
+        <div class="bg-tertiary/10 p-2 rounded-lg">
+            <span class="material-symbols-outlined text-tertiary">task_alt</span>
+        </div>
+        <div>
+            <h5 id="toast-title" class="text-on-surface font-bold text-sm">Success</h5>
+            <p id="toast-msg" class="text-on-surface-variant text-xs mt-1"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showToast(title, msg) {
+        const t = document.getElementById('toast');
+        document.getElementById('toast-title').textContent = title;
+        document.getElementById('toast-msg').textContent = msg;
+        t.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+        t.classList.add('translate-y-0', 'opacity-100');
+        setTimeout(() => {
+            t.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+            t.classList.remove('translate-y-0', 'opacity-100');
+        }, 3000);
+    }
+
+    // --- Broker Logic ---
+    const brokersGrid = document.getElementById('brokers-grid');
+
+    async function toggleBroker(brokerId, newState) {
+        try {
+            const res = await fetch('/api/admin/brokers', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ broker_id: brokerId, enabled: newState })
+            });
+            if (res.ok) {
+                showToast('Broker Updated', `Broker ${brokerId} is now ${newState ? 'enabled' : 'disabled'}.`);
+                loadBrokers(); // refresh ui
+            } else {
+                alert('Failed to update broker state.');
+            }
+        } catch(e) {
+            alert('Connection error.');
+        }
+    }
+
+    async function loadBrokers() {
+        try {
+            const res = await fetch('/api/brokers');
+            if (!res.ok) return;
+            const brokers = await res.json();
+            
+            brokersGrid.innerHTML = '';
+            brokers.forEach(b => {
+                const isEnabled = b.enabled;
+                const card = document.createElement('div');
+                card.className = `p-6 rounded-xl border flex items-center justify-between transition-all duration-300 ${isEnabled ? 'bg-surface-container border-primary/20 shadow-[0_0_20px_rgba(0,218,243,0.05)]' : 'bg-surface-container-low border-outline-variant/10 opacity-70'}`;
+                
+                card.innerHTML = `
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full ${isEnabled ? 'bg-primary/20 text-primary' : 'bg-surface-container-high text-on-surface-variant'} flex items-center justify-center">
+                            <span class="material-symbols-outlined">${b.icon}</span>
+                        </div>
+                        <div>
+                            <h3 class="font-headline font-bold text-sm text-on-surface">${b.name}</h3>
+                            <span class="text-[10px] uppercase tracking-widest font-bold ${isEnabled ? 'text-primary' : 'text-on-surface-variant'}">${isEnabled ? 'Active globally' : 'Disabled'}</span>
+                        </div>
+                    </div>
+                    <button class="relative w-12 h-6 rounded-full transition-colors duration-300 ${isEnabled ? 'bg-primary' : 'bg-surface-container-highest'} toggle-btn">
+                        <div class="absolute top-1 left-1 bg-white w-4 h-4 rounded-full transition-transform duration-300 ${isEnabled ? 'transform translate-x-6' : ''}"></div>
+                    </button>
+                `;
+                
+                card.querySelector('.toggle-btn').addEventListener('click', () => {
+                    toggleBroker(b.id, !isEnabled);
+                });
+                
+                brokersGrid.appendChild(card);
+            });
+        } catch(e) {
+            console.error('Failed to load brokers:', e);
+        }
+    }
+
+    // --- Init ---
+    loadBrokers();
+</script>
+</body>
+</html>

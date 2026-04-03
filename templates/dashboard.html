@@ -1,0 +1,907 @@
+<!doctype html>
+
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Terminal v1.0</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary": "#283141",
+              "inverse-primary": "#006875",
+              "on-secondary-container": "#acb5c9",
+              "surface-bright": "#353a3f",
+              "on-primary-container": "#002f35",
+              "secondary-container": "#3e4758",
+              "on-error": "#690005",
+              "tertiary-fixed-dim": "#3ce36a",
+              "primary-fixed": "#9cf0ff",
+              "on-background": "#dee3ea",
+              "on-primary": "#00363d",
+              "surface-container-low": "#171c21",
+              "primary-container": "#009fb2",
+              "outline-variant": "#414755",
+              "inverse-surface": "#dee3ea",
+              secondary: "#bec7db",
+              "surface-container-lowest": "#0a0f14",
+              "on-primary-fixed": "#001f24",
+              "on-tertiary": "#003912",
+              "on-error-container": "#ffdad6",
+              surface: "#0f1419",
+              "on-secondary-fixed": "#131c2b",
+              error: "#ffb4ab",
+              "on-surface-variant": "#c1c6d7",
+              "surface-tint": "#006875",
+              "on-tertiary-fixed": "#002108",
+              primary: "#00daf3",
+              "tertiary-fixed": "#69ff87",
+              "error-container": "#93000a",
+              "primary-fixed-dim": "#00daf3",
+              tertiary: "#3ce36a",
+              "tertiary-container": "#00a744",
+              "secondary-fixed-dim": "#bec7db",
+              "on-tertiary-fixed-variant": "#00531e",
+              "on-surface": "#dee3ea",
+              "surface-container": "#1b2025",
+              "inverse-on-surface": "#2c3136",
+              "surface-container-high": "#252a30",
+              "surface-variant": "#30353b",
+              background: "#0f1419",
+              "on-tertiary-container": "#00320f",
+              "surface-dim": "#0f1419",
+              "surface-container-highest": "#30353b",
+              "secondary-fixed": "#dae2f8",
+              outline: "#8b90a0",
+              "on-primary-fixed-variant": "#004f58",
+              "on-secondary-fixed-variant": "#3e4758",
+            },
+            fontFamily: {
+              headline: ["Manrope"],
+              body: ["Inter"],
+              label: ["Inter"],
+            },
+            borderRadius: {
+              DEFAULT: "0.125rem",
+              lg: "0.25rem",
+              xl: "0.5rem",
+              full: "0.75rem",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .tabular-nums {
+        font-variant-numeric: tabular-nums;
+      }
+
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+      }
+
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: #0f1419;
+      }
+
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #414755;
+        border-radius: 2px;
+      }
+
+      .glass-effect {
+        backdrop-filter: blur(12px);
+      }
+    </style>
+  </head>
+
+  <body class="bg-surface text-on-surface font-body overflow-hidden">
+    <!-- SideNavBar -->
+    <aside
+      class="fixed left-0 top-0 h-full flex flex-col pt-4 pb-8 bg-[#171c21] dark:bg-[#171c21] h-screen w-64 border-r border-[#414755]/15 transition-all duration-200 ease-in-out"
+    >
+      <nav class="flex-1 px-4 space-y-1">
+        <!-- Active: Dashboard -->
+        <a
+          class="flex items-center gap-3 px-4 py-3 bg-[#1b2025] text-[#00daf3] border-r-4 border-[#00daf3] font-semibold transition-all duration-200 ease-in-out"
+          href="/dashboard"
+        >
+          <span class="material-symbols-outlined" data-icon="dashboard"
+            >dashboard</span
+          >
+          <span class="font-['Inter'] text-sm tracking-tight">Dashboard</span>
+        </a>
+        <!-- Role-specific nav items injected by JS -->
+        <div id="role-nav-slot"></div>
+      </nav>
+      <div id="role-action-slot" class="px-6 mb-6">
+        <!-- Add Broker / Manage Users button injected by JS -->
+      </div>
+      <div class="px-4 border-t border-outline-variant/10 pt-4 space-y-1">
+        <a
+          class="flex items-center gap-3 px-4 py-3 text-[#c1c6d7] opacity-70 hover:bg-[#1b2025] hover:text-[#00daf3] transition-all duration-200 ease-in-out"
+          href="javascript:void(0)"
+          onclick="alert('For support, reach out to the admin.')"
+        >
+          <span class="material-symbols-outlined" data-icon="help">help</span>
+          <span class="font-['Inter'] text-sm tracking-tight">Support</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-3 text-[#c1c6d7] opacity-70 hover:bg-[#1b2025] hover:text-[#00daf3] transition-all duration-200 ease-in-out"
+          href="/api/logout"
+          style=""
+        >
+          <span class="material-symbols-outlined" data-icon="logout" style=""
+            >logout</span
+          >
+          <span class="font-['Inter'] text-sm tracking-tight" style=""
+            >Logout</span
+          >
+        </a>
+      </div>
+    </aside>
+    <!-- Main Content Canvas -->
+    <main class="ml-64 h-screen flex flex-col">
+      <!-- TopNavBar -->
+      <header
+        class="flex justify-between items-center w-full px-8 py-4 bg-[#0f1419] dark:bg-[#0f1419]"
+      >
+        <div class="flex items-center gap-8">
+          <div class="flex items-center gap-4">
+            <span
+              class="font-['Manrope'] font-bold text-[#00daf3] text-xl"
+              style=""
+            ></span>
+            <div class="h-6 w-[1px] bg-outline-variant/20"></div>
+            <div
+              class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-full border border-outline-variant/10"
+            >
+              <span class="w-2 h-2 rounded-full bg-tertiary"></span>
+              <span
+                class="text-xs font-medium text-on-surface-variant tabular-nums"
+                style=""
+                >Broker: Connected</span
+              >
+            </div>
+          </div>
+          <!-- Start/Stop Orders Toggle -->
+          <div
+            class="flex items-center gap-3 bg-surface-container px-4 py-2 rounded-xl border border-outline-variant/10"
+          >
+            <span
+              id="exec-label"
+              class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant"
+              style=""
+              >Execution</span
+            >
+            <div class="flex bg-surface-container-lowest p-1 rounded-lg">
+              <button
+                id="btn-start"
+                class="px-4 py-1 text-xs font-bold rounded-md bg-tertiary text-on-tertiary shadow-[0_0_12px_rgba(60,227,106,0.25)] transition-all"
+              >
+                START
+              </button>
+              <button
+                id="btn-stop"
+                class="px-4 py-1 text-xs font-bold rounded-md text-on-surface-variant hover:text-on-surface transition-all"
+              >
+                STOP
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center gap-6">
+          <div class="relative flex items-center">
+            <span
+              class="material-symbols-outlined absolute left-3 text-outline text-lg"
+              data-icon="search"
+              style=""
+              >search</span
+            >
+            <input
+              id="search-input"
+              class="bg-[#171c21] border-none rounded-xl pl-10 pr-4 py-2 text-sm text-on-surface w-64 focus:ring-1 focus:ring-primary transition-all placeholder:text-outline/50"
+              placeholder="Search instruments..."
+              type="text"
+            />
+          </div>
+          <div class="flex items-center gap-4">
+            <button
+              id="btn-notifications"
+              class="p-2 text-on-surface-variant hover:bg-[#1b2025] rounded-lg transition-colors relative"
+            >
+              <span class="material-symbols-outlined" data-icon="notifications"
+                >notifications</span
+              >
+              <span
+                id="notif-dot"
+                class="absolute top-1 right-1 w-2 h-2 rounded-full bg-error hidden"
+              ></span>
+            </button>
+            <button
+              onclick="window.location.href = '/connect'"
+              class="p-2 text-on-surface-variant hover:bg-[#1b2025] rounded-lg transition-colors"
+            >
+              <span class="material-symbols-outlined" data-icon="settings"
+                >settings</span
+              >
+            </button>
+            <div
+              class="w-10 h-10 rounded-full border border-primary/20 overflow-hidden"
+            >
+              <img
+                alt="Trader profile"
+                class="w-full h-full object-cover"
+                data-alt="close-up portrait of a professional male trader with a confident expression in a tech office environment"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWDniZU1GScGnr9jqvxXCrNjdSsew86yUxTv5bo2kqIJoztwFtR55XhJ92h5DX8ZoqhfNpqlKgDQtLAcTgmfOQXbfha6E7RRJ-Y_F5gh0o-n0wfPf-Om1lB-AYCHI2oFCLmpHwmm76r1AJ6vKGOKBkzxSxVYzQLXABXMUSiZEBel8kAe727gjXV2WgDh8Q6HE8wIAxdp82jsxWX7m_NzVOA4nRzbmN1OqLxDiNdAULKOgXLT37Tm9Zqc8biJpzTIsX6k4LIQayl9XB"
+                style=""
+              />
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- Content Area -->
+      <section class="flex-1 overflow-hidden p-8 space-y-8 bg-surface">
+        <!-- Tab Navigation Section -->
+        <div
+          class="flex items-end justify-between border-b border-outline-variant/10"
+        >
+          <div class="flex gap-8">
+            <button
+              id="tab-calls"
+              class="pb-4 px-2 text-lg font-headline font-bold text-[#00daf3] border-b-2 border-[#00daf3] transition-all"
+            >
+              Calls
+              <span
+                class="ml-2 text-xs font-body font-medium px-2 py-0.5 bg-primary/10 rounded-full"
+                id="calls-badge"
+                >0</span
+              >
+            </button>
+            <button
+              id="tab-orders"
+              class="pb-4 px-2 text-lg font-headline font-bold text-[#c1c6d7] opacity-60 hover:opacity-100 transition-all"
+            >
+              Orders
+              <span
+                class="ml-2 text-xs font-body font-medium px-2 py-0.5 bg-surface-container-high rounded-full"
+                id="orders-badge"
+                >0</span
+              >
+            </button>
+          </div>
+          <div class="pb-4 flex gap-4">
+            <button
+              id="btn-filter"
+              class="flex items-center gap-2 text-xs font-bold text-on-surface-variant bg-surface-container-low px-4 py-2 rounded-lg border border-outline-variant/10 hover:bg-surface-container transition-all"
+            >
+              <span
+                class="material-symbols-outlined text-sm"
+                data-icon="filter_list"
+                >filter_list</span
+              >
+              Filter
+            </button>
+            <button
+              id="btn-export"
+              class="flex items-center gap-2 text-xs font-bold text-on-surface-variant bg-surface-container-low px-4 py-2 rounded-lg border border-outline-variant/10 hover:bg-surface-container transition-all"
+            >
+              <span
+                class="material-symbols-outlined text-sm"
+                data-icon="download"
+                >download</span
+              >
+              Export
+            </button>
+          </div>
+        </div>
+        <!-- Data Display (Bento Layout style card) -->
+        <div
+          class="bg-surface-container-low rounded-xl overflow-hidden flex flex-col h-full border border-outline-variant/5"
+        >
+          <!-- Interactive Data Table -->
+          <div class="flex-1 overflow-auto custom-scrollbar">
+            <table
+              class="w-full text-left border-separate border-spacing-y-2 px-6 pb-6"
+            >
+              <thead class="sticky top-0 bg-surface-container-low z-10">
+                <tr
+                  class="text-white text-[11px] uppercase tracking-widest font-bold"
+                >
+                  <th class="py-6 px-4" style="">Instrument</th>
+                  <th class="py-6 px-4" style="">Premium</th>
+                  <th class="py-6 px-4" style="">Price</th>
+                  <th class="py-6 px-4" style="">Option</th>
+                  <th class="py-6 px-4" style="">SL</th>
+                  <th class="py-6 px-4" style="">Target 1</th>
+                  <th class="py-6 px-4" style="">Target 2</th>
+                  <th class="py-6 px-4" style="">Target 3</th>
+                </tr>
+              </thead>
+              <tbody
+                id="signals-tbody"
+                class="text-sm font-medium tabular-nums text-white"
+              >
+                <!-- Rows injected dynamically via JS -->
+              </tbody>
+            </table>
+          </div>
+          <!-- Pagination/Footer Stats -->
+          <div
+            class="px-8 py-4 bg-[#1b2025] flex justify-between items-center text-[11px] font-bold tracking-widest text-on-surface-variant border-t border-outline-variant/10"
+          >
+            <div class="flex gap-6">
+              <span class="flex items-center gap-2"
+                ><span class="text-primary">●</span> LIVE SIGNALS:
+                <span id="signal-count">0</span></span
+              >
+            </div>
+            <div class="flex items-center gap-4">
+              <span id="connection-status" class="text-primary"
+                >● CONNECTED</span
+              >
+            </div>
+          </div>
+        </div>
+        <!-- Market Context Widgets -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div
+            class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/5 flex items-center justify-between"
+          >
+            <div class="space-y-1">
+              <span
+                class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold"
+                >NIFTY 50</span
+              >
+              <div class="flex items-baseline gap-2">
+                <span class="text-2xl font-headline font-extrabold tabular-nums"
+                  >22,147.20</span
+                >
+                <span class="text-xs text-tertiary font-bold">+0.42%</span>
+              </div>
+            </div>
+            <div class="h-12 w-24">
+              <div
+                class="w-full h-full bg-gradient-to-t from-tertiary/5 to-tertiary/20 rounded-md flex items-end"
+              >
+                <div class="w-full h-1/2 border-t-2 border-tertiary/40"></div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/5 flex items-center justify-between"
+          >
+            <div class="space-y-1">
+              <span
+                class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold"
+                >BANK NIFTY</span
+              >
+              <div class="flex items-baseline gap-2">
+                <span class="text-2xl font-headline font-extrabold tabular-nums"
+                  >47,842.15</span
+                >
+                <span class="text-xs text-error font-bold">-0.15%</span>
+              </div>
+            </div>
+            <div class="h-12 w-24">
+              <div
+                class="w-full h-full bg-gradient-to-t from-error/5 to-error/20 rounded-md flex items-end"
+              >
+                <div class="w-full h-2/3 border-t-2 border-error/40"></div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/5"
+          >
+            <div class="flex items-center justify-between mb-4">
+              <span
+                class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold"
+                >SSE Stream</span
+              >
+              <span id="stream-label" class="text-xs text-primary font-bold"
+                >Live</span
+              >
+            </div>
+            <div class="flex items-center gap-2">
+              <div
+                id="stream-dot"
+                class="w-3 h-3 rounded-full bg-primary animate-pulse"
+              ></div>
+              <span class="text-xs text-on-surface-variant"
+                >Real-time signal feed active</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <style>
+      @keyframes signal-glow {
+        0% {
+          box-shadow: 0 0 20px rgba(0, 218, 243, 0.4);
+          background-color: rgba(0, 218, 243, 0.08);
+        }
+
+        100% {
+          box-shadow: none;
+          background-color: transparent;
+        }
+      }
+
+      .signal-new {
+        animation: signal-glow 2s ease-out forwards;
+      }
+    </style>
+    <script>
+      const tbody = document.getElementById("signals-tbody");
+      const signalCount = document.getElementById("signal-count");
+      const connStatus = document.getElementById("connection-status");
+      const streamDot = document.getElementById("stream-dot");
+      const streamLabel = document.getElementById("stream-label");
+      const callsBadge = document.getElementById("calls-badge");
+      const btnStart = document.getElementById("btn-start");
+      const btnStop = document.getElementById("btn-stop");
+      const searchInput = document.getElementById("search-input");
+      let totalSignals = 0;
+      let allSignals = []; // store all signals for filtering
+
+      function createRow(s, isNew) {
+        const targets = s.targets || [];
+        const tr = document.createElement("tr");
+        tr.className =
+          "group hover:bg-surface-container-highest/30 transition-colors" +
+          (isNew ? " signal-new" : "");
+        tr.dataset.symbol = (s.symbol || "").toLowerCase();
+        tr.dataset.option = (s.option_type || "").toLowerCase();
+        tr.innerHTML = `
+        <td class="px-4 py-4 rounded-l-xl">
+            <div class="flex flex-col">
+                <span class="font-headline font-bold">${s.symbol || "—"} ${s.strike || ""}</span>
+                <span class="text-[10px] opacity-60">${s.status || "PARSED"}</span>
+            </div>
+        </td>
+        <td class="px-4 py-4">${s.entry_price ? "₹ " + s.entry_price : "—"}</td>
+        <td class="px-4 py-4">${s.entry_price || "—"}</td>
+        <td class="px-4 py-4">${s.option_type || "—"}</td>
+        <td class="px-4 py-4">${s.stop_loss || "—"}</td>
+        <td class="px-4 py-4">${targets[0] || "—"}</td>
+        <td class="px-4 py-4">${targets[1] || "—"}</td>
+        <td class="px-4 py-4 rounded-r-xl">${targets[2] || "—"}</td>
+    `;
+        return tr;
+      }
+
+      function updateCount() {
+        signalCount.textContent = totalSignals;
+        if (callsBadge) callsBadge.textContent = totalSignals;
+      }
+
+      // ====== 1. Load existing signals ======
+      async function loadExistingSignals() {
+        try {
+          const res = await fetch("/api/signals");
+          if (!res.ok) return;
+          const signals = await res.json();
+          allSignals = signals;
+          totalSignals = signals.length;
+          updateCount();
+          signals.forEach((s) => {
+            tbody.appendChild(createRow(s, false));
+          });
+        } catch (e) {
+          console.error("Failed to load signals:", e);
+        }
+      }
+
+      // ====== 2. SSE real-time ======
+      function connectSSE() {
+        const evtSource = new EventSource("/api/signals/stream");
+        evtSource.onmessage = (event) => {
+          const signal = JSON.parse(event.data);
+          allSignals.unshift(signal);
+          totalSignals++;
+          updateCount();
+          const row = createRow(signal, true);
+          tbody.insertBefore(row, tbody.firstChild);
+          // Flash notification dot
+          const notifDot = document.getElementById("notif-dot");
+          if (notifDot) notifDot.classList.remove("hidden");
+        };
+        evtSource.onerror = () => {
+          connStatus.innerHTML =
+            '<span class="text-error">● DISCONNECTED</span>';
+          streamDot.classList.remove("bg-primary", "animate-pulse");
+          streamDot.classList.add("bg-error");
+          streamLabel.textContent = "Reconnecting...";
+          streamLabel.classList.remove("text-primary");
+          streamLabel.classList.add("text-error");
+          setTimeout(() => {
+            connStatus.innerHTML =
+              '<span class="text-primary">● CONNECTED</span>';
+            streamDot.classList.remove("bg-error");
+            streamDot.classList.add("bg-primary", "animate-pulse");
+            streamLabel.textContent = "Live";
+            streamLabel.classList.remove("text-error");
+            streamLabel.classList.add("text-primary");
+          }, 5000);
+        };
+        evtSource.onopen = () => {
+          connStatus.innerHTML =
+            '<span class="text-primary">● CONNECTED</span>';
+        };
+      }
+
+      // ====== 3. START/STOP Execution Toggle ======
+      function setExecutionUI(enabled) {
+        if (enabled) {
+          btnStart.classList.add(
+            "bg-tertiary",
+            "text-on-tertiary",
+            "shadow-[0_0_12px_rgba(60,227,106,0.25)]",
+          );
+          btnStart.classList.remove("text-on-surface-variant");
+          btnStop.classList.remove(
+            "bg-error",
+            "text-white",
+            "shadow-[0_0_12px_rgba(255,180,171,0.25)]",
+          );
+          btnStop.classList.add("text-on-surface-variant");
+        } else {
+          btnStop.classList.add(
+            "bg-error",
+            "text-white",
+            "shadow-[0_0_12px_rgba(255,180,171,0.25)]",
+          );
+          btnStop.classList.remove("text-on-surface-variant");
+          btnStart.classList.remove(
+            "bg-tertiary",
+            "text-on-tertiary",
+            "shadow-[0_0_12px_rgba(60,227,106,0.25)]",
+          );
+          btnStart.classList.add("text-on-surface-variant");
+        }
+      }
+
+      async function loadExecutionState() {
+        try {
+          const res = await fetch("/api/execution");
+          if (!res.ok) return;
+          const data = await res.json();
+          setExecutionUI(data.enabled);
+        } catch (e) {
+          /* ignore */
+        }
+      }
+
+      btnStart.addEventListener("click", async () => {
+        await fetch("/api/execution", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ enabled: true }),
+        });
+        setExecutionUI(true);
+      });
+
+      btnStop.addEventListener("click", async () => {
+        await fetch("/api/execution", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ enabled: false }),
+        });
+        setExecutionUI(false);
+      });
+
+      // ====== 4. Search / Filter ======
+      searchInput.addEventListener("input", (e) => {
+        const query = e.target.value.toLowerCase();
+        const rows = tbody.querySelectorAll("tr");
+        rows.forEach((row) => {
+          const sym = row.dataset.symbol || "";
+          const opt = row.dataset.option || "";
+          const text = row.textContent.toLowerCase();
+          row.style.display =
+            text.includes(query) || sym.includes(query) || opt.includes(query)
+              ? ""
+              : "none";
+        });
+      });
+
+      // ====== 5. Export CSV ======
+      document.getElementById("btn-export").addEventListener("click", () => {
+        if (allSignals.length === 0) {
+          alert("No signals to export.");
+          return;
+        }
+        const headers = [
+          "Symbol",
+          "Strike",
+          "Option",
+          "Entry Price",
+          "Stop Loss",
+          "Target 1",
+          "Target 2",
+          "Target 3",
+          "Status",
+        ];
+        const csvRows = [headers.join(",")];
+        allSignals.forEach((s) => {
+          const t = s.targets || [];
+          csvRows.push(
+            [
+              s.symbol || "",
+              s.strike || "",
+              s.option_type || "",
+              s.entry_price || "",
+              s.stop_loss || "",
+              t[0] || "",
+              t[1] || "",
+              t[2] || "",
+              s.status || "",
+            ].join(","),
+          );
+        });
+        const blob = new Blob([csvRows.join("\n")], { type: "text/csv" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "signals_export.csv";
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+
+      // ====== 6. Notifications Button ======
+      document
+        .getElementById("btn-notifications")
+        .addEventListener("click", () => {
+          document.getElementById("notif-dot").classList.add("hidden");
+          alert(
+            "New signals are shown as glowing rows at the top of the table.",
+          );
+        });
+
+      // ====== 7. Filter Button (toggle option type) ======
+      let filterState = "all"; // all, ce, pe
+      document.getElementById("btn-filter").addEventListener("click", () => {
+        const states = ["all", "ce", "pe"];
+        const idx = (states.indexOf(filterState) + 1) % states.length;
+        filterState = states[idx];
+        const btn = document.getElementById("btn-filter");
+        const rows = tbody.querySelectorAll("tr");
+
+        if (filterState === "all") {
+          btn.querySelector("span:last-child")?.remove();
+          rows.forEach((r) => (r.style.display = ""));
+        } else {
+          // Add an active indicator
+          const existing = btn.querySelector("span.filter-tag");
+          if (existing) existing.textContent = filterState.toUpperCase();
+          else {
+            const tag = document.createElement("span");
+            tag.className = "filter-tag ml-1 text-primary";
+            tag.textContent = filterState.toUpperCase();
+            btn.appendChild(tag);
+          }
+          rows.forEach((r) => {
+            r.style.display = r.dataset.option === filterState ? "" : "none";
+          });
+        }
+      });
+
+      // ====== 8. Tabs (Calls = all signals, Orders = executed only) ======
+      const tabCalls = document.getElementById("tab-calls");
+      const tabOrders = document.getElementById("tab-orders");
+      let activeTab = "calls";
+
+      tabCalls.addEventListener("click", () => {
+        activeTab = "calls";
+        tabCalls.classList.add(
+          "text-[#00daf3]",
+          "border-b-2",
+          "border-[#00daf3]",
+        );
+        tabCalls.classList.remove("text-[#c1c6d7]", "opacity-60");
+        tabOrders.classList.remove(
+          "text-[#00daf3]",
+          "border-b-2",
+          "border-[#00daf3]",
+        );
+        tabOrders.classList.add("text-[#c1c6d7]", "opacity-60");
+        // Show all rows
+        tbody.querySelectorAll("tr").forEach((r) => (r.style.display = ""));
+      });
+
+      tabOrders.addEventListener("click", () => {
+        activeTab = "orders";
+        tabOrders.classList.add(
+          "text-[#00daf3]",
+          "border-b-2",
+          "border-[#00daf3]",
+        );
+        tabOrders.classList.remove("text-[#c1c6d7]", "opacity-60");
+        tabCalls.classList.remove(
+          "text-[#00daf3]",
+          "border-b-2",
+          "border-[#00daf3]",
+        );
+        tabCalls.classList.add("text-[#c1c6d7]", "opacity-60");
+        // Show only EXECUTED rows (for now show all since broker isn't connected)
+        tbody.querySelectorAll("tr").forEach((r) => {
+          const statusCell = r.querySelector("td .text-\\[10px\\]");
+          if (statusCell && statusCell.textContent.trim() === "EXECUTED") {
+            r.style.display = "";
+          } else {
+            r.style.display = "none";
+          }
+        });
+      });
+
+      // ====== 9. Role-Aware UI Initialization ======
+      let currentRole = "user";
+      let BROKERS = [];
+      let activeBroker = "angelone";
+
+      function buildAdminSidebar() {
+        document.getElementById("role-nav-slot").innerHTML = `
+          <a class="flex items-center gap-3 px-4 py-3 text-[#c1c6d7] opacity-70 hover:bg-[#1b2025] hover:text-[#00daf3] transition-all duration-200 ease-in-out" href="/admin/users">
+              <span class="material-symbols-outlined" data-icon="group">group</span>
+              <span class="font-['Inter'] text-sm tracking-tight">Manage Users</span>
+          </a>
+          <a class="flex items-center gap-3 px-4 py-3 text-[#c1c6d7] opacity-70 hover:bg-[#1b2025] hover:text-[#00daf3] transition-all duration-200 ease-in-out" href="/admin/brokers">
+              <span class="material-symbols-outlined" data-icon="public">public</span>
+              <span class="font-['Inter'] text-sm tracking-tight">Manage Brokers</span>
+          </a>
+        `;
+        document.getElementById("role-action-slot").innerHTML = "";
+        document.getElementById("exec-label").textContent = "Global Execution";
+      }
+
+      function buildUserSidebar() {
+        document.getElementById("role-nav-slot").innerHTML = `
+          <button id="btn-broker-toggle" class="w-full flex items-center justify-between gap-3 px-4 py-3 text-[#c1c6d7] opacity-70 hover:bg-[#1b2025] hover:text-[#00daf3] transition-all duration-200 ease-in-out text-left">
+              <div class="flex items-center gap-3">
+                  <span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+                  <span class="font-['Inter'] text-sm tracking-tight">Brokers</span>
+              </div>
+              <span class="material-symbols-outlined text-sm transition-transform duration-200" id="broker-chevron" data-icon="expand_more">expand_more</span>
+          </button>
+          <div id="broker-dropdown" class="hidden px-2 pb-2 space-y-1 overflow-hidden transition-all duration-300">
+              <div id="broker-list" class="space-y-1"></div>
+              <a href="/connect" class="mt-2 flex items-center justify-center gap-1 px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-primary opacity-70 hover:opacity-100 transition-all">
+                  <span class="material-symbols-outlined text-xs">settings</span> Configure
+              </a>
+          </div>
+        `;
+        document.getElementById("role-action-slot").innerHTML = `
+          <button onclick="window.location.href='/connect'" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-primary to-primary-container text-on-primary font-bold text-sm flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(0,218,243,0.15)] active:scale-95 duration-100">
+              <span class="material-symbols-outlined text-lg" data-icon="person_add">person_add</span> Add Broker
+          </button>
+        `;
+        document.getElementById("exec-label").textContent = "My Execution";
+
+        // Wire broker toggle
+        document.getElementById("btn-broker-toggle").addEventListener("click", () => {
+          const dd = document.getElementById("broker-dropdown");
+          const chev = document.getElementById("broker-chevron");
+          dd.classList.toggle("hidden");
+          chev.style.transform = dd.classList.contains("hidden")
+            ? ""
+            : "rotate(180deg)";
+        });
+      }
+
+      function renderBrokerList(config) {
+        const brokerList = document.getElementById("broker-list");
+        if (!brokerList) return;
+        brokerList.innerHTML = "";
+        BROKERS.forEach((b) => {
+          const isConfigured = b.configKey ? !!config[b.configKey] : false;
+          const isActive = activeBroker === b.id;
+          const div = document.createElement("div");
+          div.className = `flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-all duration-150 ${
+            isActive
+              ? "bg-[#1b2025] border border-primary/30 text-[#00daf3]"
+              : "text-[#c1c6d7] hover:bg-[#1b2025] border border-transparent"
+          }`;
+          div.innerHTML = `
+            <span class="material-symbols-outlined text-sm">${b.icon}</span>
+            <div class="flex-1">
+                <span class="text-xs font-semibold">${b.name}</span>
+                <span class="block text-[9px] uppercase tracking-widest opacity-50">${isConfigured ? "Configured" : "Not configured"}</span>
+            </div>
+            ${isActive ? '<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: \'FILL\' 1;">check_circle</span>' : ""}
+          `;
+          div.addEventListener("click", async () => {
+            if (!isConfigured && b.configKey) {
+              if (
+                confirm(
+                  b.name + " is not configured yet. Go to broker settings?",
+                )
+              ) {
+                window.location.href = "/connect";
+              }
+              return;
+            }
+            activeBroker = b.id;
+            await fetch("/api/config", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ broker_preference: b.id }),
+            });
+            renderBrokerList(config);
+          });
+          brokerList.appendChild(div);
+        });
+      }
+
+      async function loadBrokerState() {
+        try {
+          const bRes = await fetch("/api/brokers");
+          if (bRes.ok) {
+              BROKERS = await bRes.json();
+          }
+
+          const res = await fetch("/api/config");
+          if (!res.ok) return;
+          const config = await res.json();
+          activeBroker = config.broker_preference || (BROKERS.length > 0 ? BROKERS[0].id : "none");
+          renderBrokerList(config);
+        } catch (e) {
+          /* ignore */
+        }
+      }
+
+      // ====== Boot ======
+      async function boot() {
+        // Determine role
+        try {
+          const meRes = await fetch("/api/me");
+          if (meRes.ok) {
+            const me = await meRes.json();
+            currentRole = me.role;
+          }
+        } catch (e) {
+          /* default to user */
+        }
+
+        // Build role-specific UI
+        if (currentRole === "admin") {
+          buildAdminSidebar();
+        } else {
+          buildUserSidebar();
+          loadBrokerState();
+        }
+
+        loadExistingSignals();
+        connectSSE();
+        loadExecutionState();
+      }
+
+      boot();
+    </script>
+  </body>
+</html>
