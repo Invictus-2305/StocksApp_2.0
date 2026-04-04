@@ -8,20 +8,27 @@ from database import (
     create_user, get_user, verify_password, list_users, delete_user,
     save_user_config, get_user_config, set_user_execution, get_user_execution
 )
+from logger import setup_logging
 import telegram_client
 import uvicorn
 import asyncio
 import json
 import secrets
+import logging
 from contextlib import asynccontextmanager
+
+logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    setup_logging()
+    logger.info("========== APPLICATION STARTING ==========")
     await init_db()
-    # It attempts to start the listener, but it will gracefully do nothing if it isn't configured yet
+    logger.info("Database initialized.")
     await telegram_client.start_telegram_listener()
+    logger.info("========== APPLICATION READY ==========")
     yield
-    # Cleanup logic
+    logger.info("========== APPLICATION SHUTTING DOWN ==========")
 
 app = FastAPI(title="Trading Automation API", lifespan=lifespan)
 
@@ -170,7 +177,9 @@ async def login(data: LoginData, response: Response):
             samesite="lax",
             max_age=86400 * 30 # 30 days
         )
+        logger.info(f"LOGIN SUCCESS: user='{user['username']}', role='{user['role']}'")
         return {"status": "success", "role": user["role"]}
+    logger.warning(f"LOGIN FAILED: user='{data.username}' — invalid credentials")
     raise HTTPException(status_code=401, detail="Invalid credentials")
 
 @app.get("/api/logout")
@@ -197,6 +206,7 @@ async def api_create_user(data: CreateUserData, user=Depends(require_admin)):
     if existing:
         raise HTTPException(status_code=409, detail="Username already exists")
     await create_user(data.username, data.password, data.role)
+    logger.info(f"USER CREATED: '{data.username}' (role={data.role}) by admin '{user['username']}'")
     return {"status": "success", "username": data.username}
 
 @app.delete("/api/users/{username}")
@@ -206,6 +216,7 @@ async def api_delete_user(username: str, user=Depends(require_admin)):
     success = await delete_user(username)
     if not success:
         raise HTTPException(status_code=404, detail="User not found")
+    logger.info(f"USER DELETED: '{username}' by admin '{user['username']}'")
     return {"status": "deleted"}
 
 # ---- BROKER REGISTRY API ----
@@ -231,6 +242,8 @@ async def api_toggle_broker(req: BrokerToggleRequest, user=Depends(require_admin
     active_brokers = await get_config("active_brokers", {})
     active_brokers[req.broker_id] = req.enabled
     await save_config("active_brokers", active_brokers)
+    state = "ENABLED" if req.enabled else "DISABLED"
+    logger.info(f"BROKER TOGGLE: '{req.broker_id}' {state} by admin '{user['username']}'")
     return {"status": "success", "broker_id": req.broker_id, "enabled": req.enabled}
 
 # ---- PER-USER CONFIG API ----
@@ -256,27 +269,44 @@ async def get_configuration(user=Depends(require_login)):
 
 @app.post("/api/config")
 async def update_configuration(config: ConfigUpdate, user=Depends(require_login)):
-    # Global config
-    if config.telegram_api_id is not None: await save_config("telegram_api_id", config.telegram_api_id)
-    if config.telegram_api_hash is not None: await save_config("telegram_api_hash", config.telegram_api_hash)
-    if config.telegram_channel is not None: await save_config("telegram_channel", config.telegram_channel)
-    
-    # Per-user config (All logged in users can save their own broker config)
     username = user["username"]
+    updated_keys = []
+
+    # Global config
+    if config.telegram_api_id is not None:
+        await save_config("telegram_api_id", config.telegram_api_id)
+        updated_keys.append("telegram_api_id")
+    if config.telegram_api_hash is not None:
+        await save_config("telegram_api_hash", config.telegram_api_hash)
+        updated_keys.append("telegram_api_hash")
+    if config.telegram_channel is not None:
+        await save_config("telegram_channel", config.telegram_channel)
+        updated_keys.append("telegram_channel")
+    
+    # Per-user config
     if config.zerodha_api_key is not None:
         await save_user_config(username, "zerodha_api_key", config.zerodha_api_key)
+        updated_keys.append("zerodha_api_key")
     if config.zerodha_api_secret is not None:
         await save_user_config(username, "zerodha_api_secret", config.zerodha_api_secret)
+        updated_keys.append("zerodha_api_secret")
     if config.broker_preference is not None:
         await save_user_config(username, "broker_preference", config.broker_preference)
+        updated_keys.append(f"broker_preference={config.broker_preference}")
     if config.angelone_api_key is not None:
         await save_user_config(username, "angelone_api_key", config.angelone_api_key)
+        updated_keys.append("angelone_api_key")
     if config.angelone_client_code is not None:
         await save_user_config(username, "angelone_client_code", config.angelone_client_code)
+        updated_keys.append("angelone_client_code")
     if config.angelone_pin is not None:
         await save_user_config(username, "angelone_pin", config.angelone_pin)
+        updated_keys.append("angelone_pin")
     if config.angelone_totp_secret is not None:
         await save_user_config(username, "angelone_totp_secret", config.angelone_totp_secret)
+        updated_keys.append("angelone_totp_secret")
+
+    logger.info(f"CONFIG UPDATED by '{username}': [{', '.join(updated_keys)}]")
     return {"status": "success"}
 
 # ---- EXECUTION API ----
@@ -294,11 +324,14 @@ async def get_execution_state(user=Depends(require_login)):
 async def toggle_execution(request: Request, user=Depends(require_login)):
     body = await request.json()
     enabled = body.get("enabled", False)
+    state = "ENABLED" if enabled else "DISABLED"
     if user["role"] == "admin":
         await save_config("global_execution", enabled)
+        logger.info(f"EXECUTION TOGGLE: GLOBAL {state} by admin '{user['username']}'")
         return {"enabled": enabled, "scope": "global"}
     else:
         await set_user_execution(user["username"], enabled)
+        logger.info(f"EXECUTION TOGGLE: User '{user['username']}' {state}")
         return {"enabled": enabled, "scope": "user"}
 
 # ---- SIGNALS API ----

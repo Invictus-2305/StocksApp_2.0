@@ -1,0 +1,42 @@
+[2026-04-04 16:14:10] [INFO    ] [logger]: Logging initialized — file: /Users/samarthgayakhe/stocks and options/backend/logs/trading_app.log, level: INFO
+[2026-04-04 16:14:10] [INFO    ] [main]: ========== APPLICATION STARTING ==========
+[2026-04-04 16:14:10] [INFO    ] [main]: Database initialized.
+[2026-04-04 16:14:11] [INFO    ] [telegram_client]: Telegram connected. Listening to channel: -5009133651
+[2026-04-04 16:14:11] [INFO    ] [telegram_client]: Telegram listener started. Waiting for messages...
+[2026-04-04 16:14:11] [INFO    ] [main]: ========== APPLICATION READY ==========
+[2026-04-04 16:14:37] [INFO    ] [telegram_client]: NEW MESSAGE received (401 chars): #Stock_Option
+
+SOLARINDS 12500 PE
+
+GOOD ABOVE 140
+SL 108
+TGT 163_200_250
+
+#LOT_S...
+[2026-04-04 16:14:37] [INFO    ] [parser]: PARSE OK: SOLARINDS 12500.0 PE | Entry=140.0 SL=108.0 TGT=[163.0, 200.0, 250.0] Lot=150 Risk=HIGH
+[2026-04-04 16:14:37] [INFO    ] [telegram_client]: SIGNAL PARSED: SOLARINDS 12500.0 PE | Entry=140.0 SL=108.0 TGT=[163.0, 200.0, 250.0]
+[2026-04-04 16:14:37] [INFO    ] [telegram_client]: Signal saved to DB with ID: 69d0eb95b35642ec1a947e3d
+[2026-04-04 16:14:37] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d0eb95b35642ec1a947e3d: STARTING ORDER EXECUTION
+  Symbol: SOLARINDS 12500.0 PE
+  Entry=140.0 SL=108.0 TGT=[163.0, 200.0, 250.0]
+  Total users: 2
+==================================================
+[2026-04-04 16:14:37] [INFO    ] [broker_integration]: User 'SamarthG': Authenticating with angelone...
+[2026-04-04 16:14:37] [INFO    ] [brokers.angel_one]: Angel One: Initiating session for client 'S50055441'...
+[2026-04-04 16:14:37] [INFO    ] [brokers.angel_one]: Angel One: Auth SUCCESS for client 'S50055441' (157ms)
+[2026-04-04 16:14:37] [INFO    ] [broker_integration]: User 'SamarthG': Auth SUCCESS. Placing bracket order...
+[2026-04-04 16:14:37] [INFO    ] [brokers.angel_one]: Angel One: Mapping instrument SOLARINDS 12500.0 PE via ScripMaster...
+[2026-04-04 16:14:38] [INFO    ] [scrip_master]: ScripMaster loaded: 188024 instruments in 0.91s
+[2026-04-04 16:14:38] [INFO    ] [scrip_master]: SCRIP LOOKUP: name=SOLARINDS, strike=12500.0, option_type=PE
+[2026-04-04 16:14:38] [INFO    ] [scrip_master]: SCRIP FOUND: SOLARINDS28APR2612500PE | token=153058 exchange=NFO expiry=28APR2026 lotsize=50 (lookup: 116.2ms)
+[2026-04-04 16:14:38] [INFO    ] [brokers.angel_one]: Angel One: Placing ROBO order — SOLARINDS28APR2612500PE Qty=150 Price=140.0 SL_diff=32.0 TGT_diff=23.0 Exchange=NFO
+[2026-04-04 16:14:38] [INFO    ] [brokers.angel_one]: Angel One: Order placed — OrderID=0404bfbe5b1cAO (109ms)
+[2026-04-04 16:14:38] [INFO    ] [broker_integration]: User 'SamarthG': ORDER SUCCESS | SOLARINDS28APR2612500PE | OrderID=0404bfbe5b1cAO | Broker=angelone (1325ms)
+[2026-04-04 16:14:38] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d0eb95b35642ec1a947e3d: EXECUTION SUMMARY
+  Total Users: 2 | Eligible: 1 | Skipped: 1
+  Success: 1 | Failed: 0
+  Total Time: 1.36s
+==================================================
+[2026-04-04 16:15:14] [INFO    ] [main]: ========== APPLICATION SHUTTING DOWN ==========
