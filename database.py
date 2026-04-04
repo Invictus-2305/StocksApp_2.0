@@ -21,8 +21,20 @@ signals_collection = db.signals
 users_collection = db.users
 
 async def init_db():
-    # MongoDB creates collections on the fly, but we can setup indexes here if needed
+    # Setup indexes
     await users_collection.create_index("username", unique=True)
+    await users_collection.create_index("email", unique=True)
+    
+    # --- Migration: Set email = username for any legacy users where email is null/missing ---
+    # This prevents DuplicateKeyError on email: null
+    await users_collection.update_many(
+        {"email": {"$exists": False}},
+        [{"$set": {"email": "$username"}}]
+    )
+    await users_collection.update_many(
+        {"email": None},
+        [{"$set": {"email": "$username"}}]
+    )
     
     # Seed default brokers
     existing_brokers = await config_collection.find_one({"key": "active_brokers"})
@@ -35,19 +47,22 @@ async def init_db():
         }})
         print("Default active brokers seeded into database.")
     
-    admin_username = os.getenv("ADMIN_USERNAME", "admin")
+    admin_username = os.getenv("ADMIN_USERNAME", "admin@example.com")
     admin_password = os.getenv("ADMIN_PASSWORD", "password123")
     
     existing = await users_collection.find_one({"username": admin_username})
     if not existing:
         hashed = bcrypt.hashpw(admin_password.encode(), bcrypt.gensalt())
+        # IST (UTC+5:30)
+        ist_now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=5, minutes=30)))
         await users_collection.insert_one({
             "username": admin_username,
+            "email": admin_username, # Admin username is usually their email
             "password_hash": hashed.decode(),
             "role": "admin",
             "broker_config": {},
             "execution_enabled": False,
-            "created_at": datetime.datetime.utcnow()
+            "created_at": ist_now
         })
         print(f"Admin user '{admin_username}' seeded into database.")
     else:
@@ -56,15 +71,21 @@ async def init_db():
     print("MongoDB connection initialized")
 
 # ---- User CRUD ----
-async def create_user(username: str, password: str, role: str = "user"):
+async def create_user(username: str, password: str, role: str = "user", email: str = None):
+    if email is None:
+        email = username
+        
     hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+    # IST (UTC+5:30)
+    ist_now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=5, minutes=30)))
     await users_collection.insert_one({
         "username": username,
+        "email": email,
         "password_hash": hashed.decode(),
         "role": role,
         "broker_config": {},
         "execution_enabled": False,
-        "created_at": datetime.datetime.utcnow()
+        "created_at": ist_now
     })
 
 async def get_user(username: str):
@@ -134,7 +155,9 @@ async def get_config(key: str, default=None):
 # ---- Signals ----
 async def add_signal(signal_dict: dict, status: str = "PENDING"):
     signal_doc = signal_dict.copy()
-    signal_doc["timestamp"] = datetime.datetime.utcnow()
+    # IST (UTC+5:30)
+    ist_now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=5, minutes=30)))
+    signal_doc["timestamp"] = ist_now
     signal_doc["status"] = status
     
     result = await signals_collection.insert_one(signal_doc)
@@ -144,8 +167,9 @@ async def get_signals(limit: int = 50):
     cursor = signals_collection.find().sort("timestamp", -1).limit(limit)
     signals = await cursor.to_list(length=limit)
     
-    # Pre-process ObjectIds for JSON serialization
+    # Pre-process for JSON serialization
     for s in signals:
         s["_id"] = str(s["_id"])
-        
+        if "timestamp" in s and isinstance(s["timestamp"], datetime.datetime):
+            s["timestamp"] = s["timestamp"].isoformat()
     return signals

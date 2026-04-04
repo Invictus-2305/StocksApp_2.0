@@ -165,7 +165,7 @@
       </div>
     </aside>
     <!-- Main Content Canvas -->
-    <main class="ml-64 h-screen flex flex-col">
+    <main class="ml-64 h-screen flex flex-col bg-surface overflow-hidden">
       <!-- TopNavBar -->
       <header
         class="flex justify-between items-center w-full px-8 py-4 bg-[#0f1419] dark:bg-[#0f1419]"
@@ -265,7 +265,7 @@
         </div>
       </header>
       <!-- Content Area -->
-      <section class="flex-1 overflow-hidden p-8 space-y-8 bg-surface">
+      <section class="flex-1 min-h-0 p-8 flex flex-col space-y-6 bg-surface overflow-hidden">
         <!-- Tab Navigation Section -->
         <div
           class="flex items-end justify-between border-b border-outline-variant/10"
@@ -294,7 +294,29 @@
               >
             </button>
           </div>
-          <div class="pb-4 flex gap-4">
+          <div class="pb-4 flex items-center gap-6">
+            <!-- New Top Pagination Controls -->
+            <div id="pagination-top" class="flex items-center gap-3 bg-surface-container-low px-4 py-2 rounded-lg border border-outline-variant/10">
+              <div class="flex items-center gap-2 mr-2">
+                <span class="text-[10px] uppercase tracking-widest opacity-50 font-bold">Show:</span>
+                <select id="page-size-select" class="bg-surface-container-lowest border border-outline-variant/20 rounded px-1.5 py-0.5 text-[10px] text-primary focus:ring-1 focus:ring-primary outline-none cursor-pointer">
+                  <option value="10" selected>10</option>
+                  <option value="20">20</option>
+                  <option value="30">30</option>
+                </select>
+              </div>
+              <div class="h-4 w-[1px] bg-outline-variant/20"></div>
+              <div id="pagination-controls" class="flex items-center gap-3">
+                <button id="prev-page" class="flex items-center hover:text-primary disabled:opacity-30 disabled:hover:text-inherit transition-colors" disabled title="Previous Page">
+                  <span class="material-symbols-outlined text-base">chevron_left</span>
+                </button>
+                <span id="page-info" class="text-[10px] font-bold uppercase tracking-[0.15em] opacity-80 min-w-[70px] text-center">Page 1 of 1</span>
+                <button id="next-page" class="flex items-center hover:text-primary disabled:opacity-30 disabled:hover:text-inherit transition-colors" disabled title="Next Page">
+                  <span class="material-symbols-outlined text-base">chevron_right</span>
+                </button>
+              </div>
+            </div>
+
             <button
               id="btn-filter"
               class="flex items-center gap-2 text-xs font-bold text-on-surface-variant bg-surface-container-low px-4 py-2 rounded-lg border border-outline-variant/10 hover:bg-surface-container transition-all"
@@ -326,20 +348,21 @@
           <!-- Interactive Data Table -->
           <div class="flex-1 overflow-auto custom-scrollbar">
             <table
-              class="w-full text-left border-separate border-spacing-y-2 px-6 pb-6"
+              class="w-full text-left border-collapse px-6 pb-6"
             >
-              <thead class="sticky top-0 bg-surface-container-low z-10">
+              <thead class="sticky top-0 bg-[#0a0f14] z-10">
                 <tr
-                  class="text-white text-[11px] uppercase tracking-widest font-bold"
+                  class="text-primary text-[10px] uppercase tracking-[0.2em] font-bold border-b border-primary/20"
                 >
-                  <th class="py-6 px-4" style="">Instrument</th>
-                  <th class="py-6 px-4" style="">Premium</th>
-                  <th class="py-6 px-4" style="">Price</th>
-                  <th class="py-6 px-4" style="">Option</th>
-                  <th class="py-6 px-4" style="">SL</th>
-                  <th class="py-6 px-4" style="">Target 1</th>
-                  <th class="py-6 px-4" style="">Target 2</th>
-                  <th class="py-6 px-4" style="">Target 3</th>
+                  <th class="py-5 px-4">Time</th>
+                  <th class="py-5 px-4">Instrument</th>
+                  <th class="py-5 px-4">Premium</th>
+                  <th class="py-5 px-4">Price</th>
+                  <th class="py-5 px-4">Option</th>
+                  <th class="py-5 px-4">SL</th>
+                  <th class="py-5 px-4">Target 1</th>
+                  <th class="py-5 px-4">Target 2</th>
+                  <th class="py-5 px-4">Target 3</th>
                 </tr>
               </thead>
               <tbody
@@ -351,93 +374,9 @@
             </table>
           </div>
           <!-- Pagination/Footer Stats -->
-          <div
-            class="px-8 py-4 bg-[#1b2025] flex justify-between items-center text-[11px] font-bold tracking-widest text-on-surface-variant border-t border-outline-variant/10"
-          >
-            <div class="flex gap-6">
-              <span class="flex items-center gap-2"
-                ><span class="text-primary">●</span> LIVE SIGNALS:
-                <span id="signal-count">0</span></span
-              >
-            </div>
-            <div class="flex items-center gap-4">
-              <span id="connection-status" class="text-primary"
-                >● CONNECTED</span
-              >
-            </div>
           </div>
         </div>
-        <!-- Market Context Widgets -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div
-            class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/5 flex items-center justify-between"
-          >
-            <div class="space-y-1">
-              <span
-                class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold"
-                >NIFTY 50</span
-              >
-              <div class="flex items-baseline gap-2">
-                <span class="text-2xl font-headline font-extrabold tabular-nums"
-                  >22,147.20</span
-                >
-                <span class="text-xs text-tertiary font-bold">+0.42%</span>
-              </div>
-            </div>
-            <div class="h-12 w-24">
-              <div
-                class="w-full h-full bg-gradient-to-t from-tertiary/5 to-tertiary/20 rounded-md flex items-end"
-              >
-                <div class="w-full h-1/2 border-t-2 border-tertiary/40"></div>
-              </div>
-            </div>
-          </div>
-          <div
-            class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/5 flex items-center justify-between"
-          >
-            <div class="space-y-1">
-              <span
-                class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold"
-                >BANK NIFTY</span
-              >
-              <div class="flex items-baseline gap-2">
-                <span class="text-2xl font-headline font-extrabold tabular-nums"
-                  >47,842.15</span
-                >
-                <span class="text-xs text-error font-bold">-0.15%</span>
-              </div>
-            </div>
-            <div class="h-12 w-24">
-              <div
-                class="w-full h-full bg-gradient-to-t from-error/5 to-error/20 rounded-md flex items-end"
-              >
-                <div class="w-full h-2/3 border-t-2 border-error/40"></div>
-              </div>
-            </div>
-          </div>
-          <div
-            class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/5"
-          >
-            <div class="flex items-center justify-between mb-4">
-              <span
-                class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold"
-                >SSE Stream</span
-              >
-              <span id="stream-label" class="text-xs text-primary font-bold"
-                >Live</span
-              >
-            </div>
-            <div class="flex items-center gap-2">
-              <div
-                id="stream-dot"
-                class="w-3 h-3 rounded-full bg-primary animate-pulse"
-              ></div>
-              <span class="text-xs text-on-surface-variant"
-                >Real-time signal feed active</span
-              >
-            </div>
-          </div>
-        </div>
+      </section>
       </section>
     </main>
     <style>
@@ -459,16 +398,30 @@
     </style>
     <script>
       const tbody = document.getElementById("signals-tbody");
-      const signalCount = document.getElementById("signal-count");
-      const connStatus = document.getElementById("connection-status");
-      const streamDot = document.getElementById("stream-dot");
-      const streamLabel = document.getElementById("stream-label");
       const callsBadge = document.getElementById("calls-badge");
       const btnStart = document.getElementById("btn-start");
       const btnStop = document.getElementById("btn-stop");
       const searchInput = document.getElementById("search-input");
+      const pageSizeSelect = document.getElementById("page-size-select");
+      const prevPageBtn = document.getElementById("prev-page");
+      const nextPageBtn = document.getElementById("next-page");
+      const pageInfo = document.getElementById("page-info");
+
       let totalSignals = 0;
-      let allSignals = []; // store all signals for filtering
+      let allSignals = []; 
+      let currentPage = 1;
+      let itemsPerPage = 10;
+      let filterState = "all"; 
+
+      function formatTime(isoStr) {
+        if (!isoStr) return "—";
+        try {
+          const date = new Date(isoStr);
+          return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+        } catch (e) {
+          return "—";
+        }
+      }
 
       function createRow(s, isNew) {
         const targets = s.targets || [];
@@ -479,25 +432,59 @@
         tr.dataset.symbol = (s.symbol || "").toLowerCase();
         tr.dataset.option = (s.option_type || "").toLowerCase();
         tr.innerHTML = `
-        <td class="px-4 py-4 rounded-l-xl">
-            <div class="flex flex-col">
-                <span class="font-headline font-bold">${s.symbol || "—"} ${s.strike || ""}</span>
-                <span class="text-[10px] opacity-60">${s.status || "PARSED"}</span>
-            </div>
+        <td class="px-4 py-4 border-b border-[#414755]/40 text-xs font-mono text-primary/70">${formatTime(s.timestamp)}</td>
+        <td class="px-4 py-4 border-b border-[#414755]/40">
+            <span class="font-headline font-bold">${s.symbol || "—"}</span>
         </td>
-        <td class="px-4 py-4">${s.entry_price ? "₹ " + s.entry_price : "—"}</td>
-        <td class="px-4 py-4">${s.entry_price || "—"}</td>
-        <td class="px-4 py-4">${s.option_type || "—"}</td>
-        <td class="px-4 py-4">${s.stop_loss || "—"}</td>
-        <td class="px-4 py-4">${targets[0] || "—"}</td>
-        <td class="px-4 py-4">${targets[1] || "—"}</td>
-        <td class="px-4 py-4 rounded-r-xl">${targets[2] || "—"}</td>
+        <td class="px-4 py-4 border-b border-[#414755]/40 font-bold">${s.strike || "—"}</td>
+        <td class="px-4 py-4 border-b border-[#414755]/40">₹ ${s.entry_price || "—"}</td>
+        <td class="px-4 py-4 border-b border-[#414755]/40">${s.option_type || "—"}</td>
+        <td class="px-4 py-4 border-b border-[#414755]/40">${s.stop_loss || "—"}</td>
+        <td class="px-4 py-4 border-b border-[#414755]/40">${targets[0] || "—"}</td>
+        <td class="px-4 py-4 border-b border-[#414755]/40">${targets[1] || "—"}</td>
+        <td class="px-4 py-4 border-b border-[#414755]/40">${targets[2] || "—"}</td>
     `;
         return tr;
       }
 
+      function getFilteredSignals() {
+        const query = searchInput.value.toLowerCase();
+        return allSignals.filter(s => {
+          const sym = (s.symbol || "").toLowerCase();
+          const opt = (s.option_type || "").toLowerCase();
+          const matchQuery = sym.includes(query) || opt.includes(query);
+          
+          if (filterState === 'all') return matchQuery;
+          return matchQuery && opt === filterState;
+        });
+      }
+
+      function renderTable() {
+        const filtered = getFilteredSignals();
+        totalSignals = allSignals.length;
+        if (callsBadge) callsBadge.textContent = totalSignals;
+
+        const totalPages = Math.ceil(filtered.length / itemsPerPage) || 1;
+        if (currentPage > totalPages) currentPage = totalPages;
+        
+        const start = (currentPage - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        const pagedData = filtered.slice(start, end);
+
+        tbody.innerHTML = "";
+        pagedData.forEach((s, idx) => {
+          // If the signal is within the last 5 seconds, mark it as new for animation
+          const isRecentlyNew = s.timestamp && (new Date() - new Date(s.timestamp) < 5000);
+          tbody.appendChild(createRow(s, isRecentlyNew));
+        });
+
+        // Update pagination UI
+        pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+        prevPageBtn.disabled = currentPage <= 1;
+        nextPageBtn.disabled = currentPage >= totalPages;
+      }
+
       function updateCount() {
-        signalCount.textContent = totalSignals;
         if (callsBadge) callsBadge.textContent = totalSignals;
       }
 
@@ -508,11 +495,7 @@
           if (!res.ok) return;
           const signals = await res.json();
           allSignals = signals;
-          totalSignals = signals.length;
-          updateCount();
-          signals.forEach((s) => {
-            tbody.appendChild(createRow(s, false));
-          });
+          renderTable();
         } catch (e) {
           console.error("Failed to load signals:", e);
         }
@@ -524,35 +507,16 @@
         evtSource.onmessage = (event) => {
           const signal = JSON.parse(event.data);
           allSignals.unshift(signal);
-          totalSignals++;
-          updateCount();
-          const row = createRow(signal, true);
-          tbody.insertBefore(row, tbody.firstChild);
+          renderTable();
           // Flash notification dot
           const notifDot = document.getElementById("notif-dot");
           if (notifDot) notifDot.classList.remove("hidden");
         };
         evtSource.onerror = () => {
-          connStatus.innerHTML =
-            '<span class="text-error">● DISCONNECTED</span>';
-          streamDot.classList.remove("bg-primary", "animate-pulse");
-          streamDot.classList.add("bg-error");
-          streamLabel.textContent = "Reconnecting...";
-          streamLabel.classList.remove("text-primary");
-          streamLabel.classList.add("text-error");
-          setTimeout(() => {
-            connStatus.innerHTML =
-              '<span class="text-primary">● CONNECTED</span>';
-            streamDot.classList.remove("bg-error");
-            streamDot.classList.add("bg-primary", "animate-pulse");
-            streamLabel.textContent = "Live";
-            streamLabel.classList.remove("text-error");
-            streamLabel.classList.add("text-primary");
-          }, 5000);
+          setTimeout(connectSSE, 5000);
         };
         evtSource.onopen = () => {
-          connStatus.innerHTML =
-            '<span class="text-primary">● CONNECTED</span>';
+          console.log("SSE Connected");
         };
       }
 
@@ -616,19 +580,32 @@
         setExecutionUI(false);
       });
 
-      // ====== 4. Search / Filter ======
+      // ====== 4. Pagination / Search / Filter Events ======
+      pageSizeSelect.addEventListener("change", (e) => {
+        itemsPerPage = parseInt(e.target.value);
+        currentPage = 1;
+        renderTable();
+      });
+
+      prevPageBtn.addEventListener("click", () => {
+        if (currentPage > 1) {
+          currentPage--;
+          renderTable();
+        }
+      });
+
+      nextPageBtn.addEventListener("click", () => {
+        const filtered = getFilteredSignals();
+        const totalPages = Math.ceil(filtered.length / itemsPerPage);
+        if (currentPage < totalPages) {
+          currentPage++;
+          renderTable();
+        }
+      });
+
       searchInput.addEventListener("input", (e) => {
-        const query = e.target.value.toLowerCase();
-        const rows = tbody.querySelectorAll("tr");
-        rows.forEach((row) => {
-          const sym = row.dataset.symbol || "";
-          const opt = row.dataset.option || "";
-          const text = row.textContent.toLowerCase();
-          row.style.display =
-            text.includes(query) || sym.includes(query) || opt.includes(query)
-              ? ""
-              : "none";
-        });
+        currentPage = 1;
+        renderTable();
       });
 
       // ====== 5. Export CSV ======
@@ -685,17 +662,15 @@
         });
 
       // ====== 7. Filter Button (toggle option type) ======
-      let filterState = "all"; // all, ce, pe
       document.getElementById("btn-filter").addEventListener("click", () => {
         const states = ["all", "ce", "pe"];
         const idx = (states.indexOf(filterState) + 1) % states.length;
         filterState = states[idx];
         const btn = document.getElementById("btn-filter");
-        const rows = tbody.querySelectorAll("tr");
 
         if (filterState === "all") {
-          btn.querySelector("span:last-child")?.remove();
-          rows.forEach((r) => (r.style.display = ""));
+          const existingTag = btn.querySelector("span.filter-tag");
+          if (existingTag) existingTag.remove();
         } else {
           // Add an active indicator
           const existing = btn.querySelector("span.filter-tag");
@@ -706,10 +681,9 @@
             tag.textContent = filterState.toUpperCase();
             btn.appendChild(tag);
           }
-          rows.forEach((r) => {
-            r.style.display = r.dataset.option === filterState ? "" : "none";
-          });
         }
+        currentPage = 1;
+        renderTable();
       });
 
       // ====== 8. Tabs (Calls = all signals, Orders = executed only) ======

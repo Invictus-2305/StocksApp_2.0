@@ -48,6 +48,7 @@ class LoginData(BaseModel):
 
 class CreateUserData(BaseModel):
     username: str
+    email: str = None
     password: str
     role: str = "user"
 
@@ -202,12 +203,22 @@ async def api_list_users(user=Depends(require_admin)):
 
 @app.post("/api/users")
 async def api_create_user(data: CreateUserData, user=Depends(require_admin)):
-    existing = await get_user(data.username)
-    if existing:
+    # Check both username and email for duplicates
+    existing_user = await get_user(data.username)
+    if existing_user:
         raise HTTPException(status_code=409, detail="Username already exists")
-    await create_user(data.username, data.password, data.role)
-    logger.info(f"USER CREATED: '{data.username}' (role={data.role}) by admin '{user['username']}'")
-    return {"status": "success", "username": data.username}
+    
+    # During transition, use username as email if not provided
+    effective_email = data.email or data.username
+    
+    from database import users_collection
+    existing_email = await users_collection.find_one({"email": effective_email})
+    if existing_email:
+        raise HTTPException(status_code=409, detail="Email already exists")
+
+    await create_user(data.username, data.password, data.role, email=effective_email)
+    logger.info(f"USER CREATED: '{data.username}' (email={effective_email}, role={data.role}) by admin '{user['username']}'")
+    return {"status": "success", "username": data.username, "email": effective_email}
 
 @app.delete("/api/users/{username}")
 async def api_delete_user(username: str, user=Depends(require_admin)):

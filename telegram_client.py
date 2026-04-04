@@ -1,6 +1,7 @@
 import asyncio
 import json
 import logging
+import datetime
 from telethon import TelegramClient, events
 from database import get_config, add_signal
 from parser import parse_order_signal
@@ -84,6 +85,9 @@ async def start_telegram_listener():
                 broadcast_data = signal_data.copy()
                 broadcast_data["_id"] = signal_id
                 broadcast_data["status"] = "PARSED"
+                # Generate IST timestamp (UTC+5:30)
+                ist_now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=5, minutes=30)))
+                broadcast_data["timestamp"] = ist_now.isoformat()
                 await _broadcast(broadcast_data)
                 logger.debug(f"Signal broadcasted to {len(_signal_subscribers)} SSE clients.")
                 
