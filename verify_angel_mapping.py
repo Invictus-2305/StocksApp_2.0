@@ -13,14 +13,10 @@ async def verify():
     
     # 1. Sample Signal
     sample_msg = """
-    BANKNIFTY 48500 CE
-
-    GOOD ABOVE 320
-    SL 285
-    TGT 350_380_420
-
-    Only Above With Some Buffer Not Before Or At FiX
-    RISK : HIGH 
+    SENSEX 74000 PE
+    GOOD ABOVE 950
+    SL 887
+    TGT 990_1050_1120
     """
     
     print(f"Parsing sample message...")
@@ -44,6 +40,7 @@ async def verify():
         print(f"  Symbol: {scrip['symbol']}")
         print(f"  Lot Size: {scrip['lotsize']}")
         print(f"  Expiry: {scrip['expiry']}")
+        print(f"  Exchange: {scrip['exch_seg']}")
         
         # 4. Verify ROBO Params
         entry = signal['entry_price']

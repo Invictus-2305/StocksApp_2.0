@@ -58,7 +58,7 @@ class AngelOneBroker(BaseBroker):
             strike = signal.get("strike")
             option_type = signal.get("option_type")
             
-            scrip = await ScripMaster.get_token(name, strike, option_type, exchange="NFO")
+            scrip = await ScripMaster.get_token(name, strike, option_type)
             if not scrip:
                 return {"status": False, "message": f"Instrument mapping failed for {name} {strike} {option_type}"}
                 
@@ -87,7 +87,7 @@ class AngelOneBroker(BaseBroker):
                 "tradingsymbol": scrip['symbol'],
                 "symboltoken": scrip['token'],
                 "transactiontype": "BUY", # Standard for the signal
-                "exchange": "NFO",
+                "exchange": scrip['exch_seg'],
                 "ordertype": "LIMIT",
                 "producttype": "BO",
                 "duration": "DAY",

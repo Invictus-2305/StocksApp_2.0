@@ -62,9 +62,9 @@ class ScripMaster:
         return False
 
     @classmethod
-    async def get_token(cls, name: str, strike: float, option_type: str, exchange: str = "NFO"):
+    async def get_token(cls, name: str, strike: float, option_type: str):
         """
-        Searmches for a specific instrument and returns its details.
+        Searches for a specific instrument and returns its details.
         """
         if cls._data is None:
             await cls.load()
@@ -73,12 +73,11 @@ class ScripMaster:
             return None
 
         # Filter by name, strike, and option type (PE/CE)
-        # Note: 'symbol' in master usually contains the full name like 'NIFTY25APR2422000PE'
-        # 'name' is the base asset like 'NIFTY'
-        
         mask = (cls._data['name'] == name.upper()) & \
-               (cls._data['strike'] == strike) & \
-               (cls._data['exch_seg'] == exchange)
+               (cls._data['strike'] == strike)
+        
+        # Sensex options are usually in BFO, Nifty in NFO
+        # We don't filter by exch_seg here to allow both NFO and BFO
         
         if option_type:
             # For options, check the symbol end for PE/CE or instrument type
@@ -90,12 +89,10 @@ class ScripMaster:
             print(f"No match found for {name} {strike} {option_type}")
             return None
             
-        # If multiple results (different expiries), pick the nearest one
+        # If multiple results (different expiries or exchanges), prioritize nearest expiry
         if len(results) > 1:
-            # Filter for results with valid expiry dates
             valid_expiry = results[results['expiry'] != ""].copy()
             if not valid_expiry.empty:
-                # Convert expiry to datetime for sorting (format: 25APR2024)
                 valid_expiry['expiry_dt'] = pd.to_datetime(valid_expiry['expiry'], format='%d%b%Y')
                 nearest = valid_expiry.sort_values(by='expiry_dt').iloc[0]
             else:
@@ -107,7 +104,8 @@ class ScripMaster:
             "token": nearest['token'],
             "symbol": nearest['symbol'],
             "lotsize": int(nearest['lotsize']),
-            "expiry": nearest['expiry']
+            "expiry": nearest['expiry'],
+            "exch_seg": nearest['exch_seg']
         }
 
 if __name__ == "__main__":
