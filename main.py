@@ -54,7 +54,7 @@ class ConfigUpdate(BaseModel):
     angelone_api_key: str = None
     angelone_client_code: str = None
     angelone_pin: str = None
-    angelone_totp: str = None
+    angelone_totp_secret: str = None
 
 class BrokerToggleRequest(BaseModel):
     broker_id: str
@@ -236,26 +236,23 @@ async def api_toggle_broker(req: BrokerToggleRequest, user=Depends(require_admin
 # ---- PER-USER CONFIG API ----
 @app.get("/api/config")
 async def get_configuration(user=Depends(require_login)):
-    if user["role"] == "admin":
-        return {
-            "telegram_api_id": await get_config("telegram_api_id"),
-            "telegram_api_hash": await get_config("telegram_api_hash"),
-            "telegram_channel": await get_config("telegram_channel")
-        }
+    username = user["username"]
+    config = await get_user_config(username) or {}
     
-    config = await get_user_config(user["username"]) or {}
-    return {
-        "telegram_api_id": await get_config("telegram_api_id"),
-        "telegram_api_hash": await get_config("telegram_api_hash"),
-        "telegram_channel": await get_config("telegram_channel"),
+    # Base response with global Telegram config (admins see these, users see empty/cached)
+    res = {
+        "telegram_api_id": await get_config("telegram_api_id", ""),
+        "telegram_api_hash": await get_config("telegram_api_hash", ""),
+        "telegram_channel": await get_config("telegram_channel", ""),
         "zerodha_api_key": config.get("zerodha_api_key", ""),
         "zerodha_api_secret": config.get("zerodha_api_secret", ""),
         "broker_preference": config.get("broker_preference", "angelone"),
         "angelone_api_key": config.get("angelone_api_key", ""),
         "angelone_client_code": config.get("angelone_client_code", ""),
         "angelone_pin": config.get("angelone_pin", ""),
-        "angelone_totp": config.get("angelone_totp", ""),
+        "angelone_totp_secret": config.get("angelone_totp_secret", ""),
     }
+    return res
 
 @app.post("/api/config")
 async def update_configuration(config: ConfigUpdate, user=Depends(require_login)):
@@ -264,23 +261,22 @@ async def update_configuration(config: ConfigUpdate, user=Depends(require_login)
     if config.telegram_api_hash is not None: await save_config("telegram_api_hash", config.telegram_api_hash)
     if config.telegram_channel is not None: await save_config("telegram_channel", config.telegram_channel)
     
-    # Per-user config
-    if user["role"] == "user":
-        username = user["username"]
-        if config.zerodha_api_key is not None:
-            await save_user_config(username, "zerodha_api_key", config.zerodha_api_key)
-        if config.zerodha_api_secret is not None:
-            await save_user_config(username, "zerodha_api_secret", config.zerodha_api_secret)
-        if config.broker_preference is not None:
-            await save_user_config(username, "broker_preference", config.broker_preference)
-        if config.angelone_api_key is not None:
-            await save_user_config(username, "angelone_api_key", config.angelone_api_key)
-        if config.angelone_client_code is not None:
-            await save_user_config(username, "angelone_client_code", config.angelone_client_code)
-        if config.angelone_pin is not None:
-            await save_user_config(username, "angelone_pin", config.angelone_pin)
-        if config.angelone_totp is not None:
-            await save_user_config(username, "angelone_totp", config.angelone_totp)
+    # Per-user config (All logged in users can save their own broker config)
+    username = user["username"]
+    if config.zerodha_api_key is not None:
+        await save_user_config(username, "zerodha_api_key", config.zerodha_api_key)
+    if config.zerodha_api_secret is not None:
+        await save_user_config(username, "zerodha_api_secret", config.zerodha_api_secret)
+    if config.broker_preference is not None:
+        await save_user_config(username, "broker_preference", config.broker_preference)
+    if config.angelone_api_key is not None:
+        await save_user_config(username, "angelone_api_key", config.angelone_api_key)
+    if config.angelone_client_code is not None:
+        await save_user_config(username, "angelone_client_code", config.angelone_client_code)
+    if config.angelone_pin is not None:
+        await save_user_config(username, "angelone_pin", config.angelone_pin)
+    if config.angelone_totp_secret is not None:
+        await save_user_config(username, "angelone_totp_secret", config.angelone_totp_secret)
     return {"status": "success"}
 
 # ---- EXECUTION API ----

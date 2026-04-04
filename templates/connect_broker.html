@@ -287,8 +287,19 @@ async function loadConfig() {
         const res = await fetch('/api/config');
         if (!res.ok) return;
         const cfg = await res.json();
-        if (cfg.zerodha_api_key) document.getElementById('broker-api-key').value = cfg.zerodha_api_key;
-        if (cfg.zerodha_api_secret) document.getElementById('broker-client-code').value = cfg.zerodha_api_secret;
+        
+        // Populate fields based on activeBroker
+        if (activeBroker === 'angelone') {
+            document.getElementById('broker-api-key').value = cfg.angelone_api_key || "";
+            document.getElementById('broker-client-code').value = cfg.angelone_client_code || "";
+            document.getElementById('broker-pin').value = cfg.angelone_pin || "";
+            document.getElementById('broker-totp').value = cfg.angelone_totp_secret || "";
+        } else if (activeBroker === 'zerodha') {
+            document.getElementById('broker-api-key').value = cfg.zerodha_api_key || "";
+            document.getElementById('broker-client-code').value = cfg.zerodha_api_secret || "";
+            document.getElementById('broker-pin').value = "";
+            document.getElementById('broker-totp').value = "";
+        }
     } catch(e) {
         console.error('Failed to load config:', e);
     }
@@ -302,14 +313,24 @@ document.getElementById('btn-save-broker').addEventListener('click', async () =>
     const totp = document.getElementById('broker-totp').value;
 
     try {
+        const payload = {
+            broker_preference: activeBroker
+        };
+
+        if (activeBroker === 'angelone') {
+            payload.angelone_api_key = apiKey;
+            payload.angelone_client_code = clientCode;
+            payload.angelone_pin = pin;
+            payload.angelone_totp_secret = totp;
+        } else if (activeBroker === 'zerodha') {
+            payload.zerodha_api_key = apiKey;
+            payload.zerodha_api_secret = clientCode;
+        }
+
         const res = await fetch('/api/config', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                zerodha_api_key: apiKey,
-                zerodha_api_secret: clientCode,
-                broker_preference: 'angelone'
-            })
+            body: JSON.stringify(payload)
         });
 
         if (res.ok) {
@@ -321,6 +342,7 @@ document.getElementById('btn-save-broker').addEventListener('click', async () =>
                 toast.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
                 toast.classList.remove('translate-y-0', 'opacity-100');
             }, 3000);
+            loadConfig(); // Refresh fields
         } else {
             alert('Failed to save broker credentials.');
         }
@@ -369,11 +391,8 @@ function renderBrokerList(config) {
         `;
         div.addEventListener('click', async () => {
             activeBroker = b.id;
-            await fetch('/api/config', {
-                method: 'POST',
-                headers: {'Content-Type':'application/json'},
-                body: JSON.stringify({ broker_preference: b.id })
-            });
+            document.querySelector('h3.font-headline').textContent = `Configuration: ${b.name}`;
+            await loadConfig();
             renderBrokerList(config);
         });
         brokerListEl.appendChild(div);
@@ -395,11 +414,8 @@ function renderBrokerList(config) {
         `;
         pdiv.addEventListener('click', async () => {
             activeBroker = b.id;
-            await fetch('/api/config', {
-                method: 'POST',
-                headers: {'Content-Type':'application/json'},
-                body: JSON.stringify({ broker_preference: b.id })
-            });
+            document.querySelector('h3.font-headline').textContent = `Configuration: ${b.name}`;
+            await loadConfig();
             renderBrokerList(config);
         });
         providerListEl.appendChild(pdiv);

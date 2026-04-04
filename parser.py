@@ -19,7 +19,7 @@ def parse_order_signal(message_text: str) -> dict:
     # Extract Symbol, Strike, Option Type
     # e.g. "SOLARINDS 12500 PE" or "NIFTY 22900 PE"
     # Looking for a line that has Capitalized Words followed by Number and PE/CE
-    symbol_match = re.search(r"^([A-Z]+)\s+(\d+(?:\.\d+)?)\s+(PE|CE)", message_text, re.MULTILINE | re.IGNORECASE)
+    symbol_match = re.search(r"^\s*([A-Z]+)\s+(\d+(?:\.\d+)?)\s+(PE|CE)", message_text, re.MULTILINE | re.IGNORECASE)
     if symbol_match:
         result["symbol"] = symbol_match.group(1).upper()
         result["strike"] = float(symbol_match.group(2))
@@ -63,17 +63,13 @@ def parse_order_signal(message_text: str) -> dict:
 if __name__ == "__main__":
     # Test block
     sample = """
-    ======================================
-    #Stock_Option
+    SENSEX 74000 PE
 
-    SOLARINDS 12500 PE
+    GOOD ABOVE 950
+    SL 887
+    TGT 990_1050_1120
 
-    GOOD ABOVE 140
-    SL 108
-    TGT 163_200_250
-
-    #LOT_SIZE_150
-    RISK  : HIGH 
-    -------------------------------------------
+    Only Above With Some Buffer Not Before Or At FiX
+    RISK : HIGH 
     """
     print(parse_order_signal(sample))
