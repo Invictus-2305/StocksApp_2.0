@@ -1,0 +1,17 @@
+fastapi
+uvicorn
+motor
+pymongo
+python-dotenv
+telethon
+bcrypt
+certifi
+jinja2
+aiofiles
+aiohttp
+pandas
+pyotp
+smartapi-python
+pydantic
+python-multipart
+pytest
