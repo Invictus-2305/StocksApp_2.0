@@ -241,3 +241,111 @@ TGT 163_200_250
 [2026-04-04 23:28:06] [INFO    ] [main]: LOGIN SUCCESS: user='Samarth', role='user'
 [2026-04-04 23:28:11] [INFO    ] [main]: CONFIG UPDATED by 'Samarth': [broker_preference=angelone]
 [2026-04-04 23:29:59] [INFO    ] [main]: ========== APPLICATION SHUTTING DOWN ==========
+[2026-04-08 22:35:09] [INFO    ] [logger]: Logging initialized — file: /Users/samarthgayakhe/stocks and options/backend/logs/trading_app.log, level: INFO
+[2026-04-08 22:35:09] [INFO    ] [main]: ========== APPLICATION STARTING ==========
+[2026-04-08 22:35:10] [INFO    ] [main]: Database initialized.
+[2026-04-08 22:35:11] [INFO    ] [telegram_client]: Telegram connected. Listening to channel: -5009133651
+[2026-04-08 22:35:11] [INFO    ] [telegram_client]: Telegram listener started. Waiting for messages...
+[2026-04-08 22:35:11] [INFO    ] [main]: ========== APPLICATION READY ==========
+[2026-04-08 22:35:31] [WARNING ] [main]: LOGIN FAILED: user='SamarthG' — invalid credentials
+[2026-04-08 22:35:41] [INFO    ] [main]: LOGIN SUCCESS: user='Samarth', role='user'
+[2026-04-08 22:36:39] [INFO    ] [main]: LOGIN SUCCESS: user='admin', role='admin'
+[2026-04-08 22:36:45] [INFO    ] [main]: USER DELETED: 'Samarth' by admin 'admin'
+[2026-04-08 22:36:52] [INFO    ] [main]: USER CREATED: 'Samarth' (email=Samarth, role=user) by admin 'admin'
+[2026-04-08 22:37:07] [INFO    ] [main]: LOGIN SUCCESS: user='Samarth', role='user'
+[2026-04-08 22:38:11] [INFO    ] [main]: ========== APPLICATION SHUTTING DOWN ==========
+[2026-04-08 22:38:13] [INFO    ] [logger]: Logging initialized — file: /Users/samarthgayakhe/stocks and options/backend/logs/trading_app.log, level: INFO
+[2026-04-08 22:38:13] [INFO    ] [main]: ========== APPLICATION STARTING ==========
+[2026-04-08 22:38:14] [INFO    ] [main]: Database initialized.
+[2026-04-08 22:38:14] [INFO    ] [telegram_client]: Telegram connected. Listening to channel: -5009133651
+[2026-04-08 22:38:14] [INFO    ] [telegram_client]: Telegram listener started. Waiting for messages...
+[2026-04-08 22:38:14] [INFO    ] [main]: ========== APPLICATION READY ==========
+[2026-04-08 22:38:18] [INFO    ] [main]: ========== APPLICATION SHUTTING DOWN ==========
+[2026-04-08 22:38:26] [INFO    ] [logger]: Logging initialized — file: /Users/samarthgayakhe/stocks and options/backend/logs/trading_app.log, level: INFO
+[2026-04-08 22:38:26] [INFO    ] [main]: ========== APPLICATION STARTING ==========
+[2026-04-08 22:38:29] [INFO    ] [main]: Database initialized.
+[2026-04-08 22:38:29] [INFO    ] [telegram_client]: Telegram connected. Listening to channel: -5009133651
+[2026-04-08 22:38:29] [INFO    ] [telegram_client]: Telegram listener started. Waiting for messages...
+[2026-04-08 22:38:29] [INFO    ] [main]: ========== APPLICATION READY ==========
+[2026-04-08 22:38:37] [INFO    ] [main]: LOGIN SUCCESS: user='Samarth', role='user'
+[2026-04-08 22:39:04] [INFO    ] [main]: CONFIG UPDATED by 'Samarth': [broker_preference=angelone, angelone_client_code, angelone_pin, angelone_totp_secret]
+[2026-04-08 22:39:36] [INFO    ] [main]: CONFIG UPDATED by 'Samarth': [broker_preference=angelone, angelone_client_code, angelone_pin, angelone_totp_secret]
+[2026-04-08 22:39:59] [INFO    ] [main]: EXECUTION TOGGLE: User 'Samarth' ENABLED
+[2026-04-08 22:41:04] [INFO    ] [logger]: Logging initialized — file: /Users/samarthgayakhe/stocks and options/backend/logs/trading_app.log, level: INFO
+[2026-04-08 22:41:04] [INFO    ] [main]: ========== APPLICATION STARTING ==========
+[2026-04-08 22:41:04] [INFO    ] [main]: Database initialized.
+[2026-04-08 22:41:05] [INFO    ] [telegram_client]: Telegram connected. Listening to channel: -5009133651
+[2026-04-08 22:41:05] [INFO    ] [telegram_client]: Telegram listener started. Waiting for messages...
+[2026-04-08 22:41:05] [INFO    ] [main]: ========== APPLICATION READY ==========
+[2026-04-08 22:42:40] [INFO    ] [main]: LOGIN SUCCESS: user='Samarth', role='user'
+[2026-04-08 22:47:52] [INFO    ] [telegram_client]: NEW MESSAGE received (428 chars): SENSEX 74000 PE
+
+GOOD ABOVE 950
+SL 887
+TGT 990_1050_1120
+
+Only Above With Some B...
+[2026-04-08 22:47:52] [INFO    ] [parser]: PARSE OK: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0] Lot=None Risk=HIGH
+[2026-04-08 22:47:52] [INFO    ] [telegram_client]: SIGNAL PARSED: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+[2026-04-08 22:47:52] [INFO    ] [telegram_client]: Signal saved to DB with ID: 69d68dc0547820a2dd681224
+[2026-04-08 22:47:52] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d68dc0547820a2dd681224: STARTING ORDER EXECUTION
+  Symbol: SENSEX 74000.0 PE
+  Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+  Total users: 2
+==================================================
+[2026-04-08 22:47:52] [INFO    ] [broker_integration]: User 'Samarth': Authenticating with angelone...
+[2026-04-08 22:47:52] [INFO    ] [brokers.angel_one]: Angel One: Initiating session for client 'S50055441'...
+[2026-04-08 22:47:53] [INFO    ] [brokers.angel_one]: Angel One: Auth SUCCESS for client 'S50055441' (162ms)
+[2026-04-08 22:47:53] [INFO    ] [broker_integration]: User 'Samarth': Auth SUCCESS. Placing bracket order...
+[2026-04-08 22:47:53] [INFO    ] [brokers.angel_one]: Angel One: Mapping instrument SENSEX 74000.0 PE via ScripMaster...
+[2026-04-08 22:47:53] [INFO    ] [scrip_master]: ScripMaster cache expired or missing. Downloading fresh data...
+[2026-04-08 22:48:00] [INFO    ] [scrip_master]: ScripMaster downloaded: 34.84 MB in 7.52s
+[2026-04-08 22:48:01] [INFO    ] [scrip_master]: ScripMaster loaded: 190304 instruments in 0.98s
+[2026-04-08 22:48:01] [INFO    ] [scrip_master]: SCRIP LOOKUP: name=SENSEX, strike=74000.0, option_type=PE
+[2026-04-08 22:48:01] [INFO    ] [scrip_master]: SCRIP FOUND: SENSEX2640974000PE | token=866378 exchange=BFO expiry=09APR2026 lotsize=20 (lookup: 138.8ms)
+[2026-04-08 22:48:01] [INFO    ] [brokers.angel_one]: Angel One: Placing ROBO order — SENSEX2640974000PE Qty=20 Price=950.0 SL_diff=63.0 TGT_diff=40.0 Exchange=BFO
+[2026-04-08 22:48:01] [INFO    ] [brokers.angel_one]: Angel One: Order placed — OrderID=None (59ms)
+[2026-04-08 22:48:01] [INFO    ] [broker_integration]: User 'Samarth': ORDER SUCCESS | SENSEX2640974000PE | OrderID=None | Broker=angelone (8899ms)
+[2026-04-08 22:48:01] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d68dc0547820a2dd681224: EXECUTION SUMMARY
+  Total Users: 2 | Eligible: 1 | Skipped: 1
+  Success: 1 | Failed: 0
+  Total Time: 8.93s
+==================================================
+[2026-04-08 22:51:33] [INFO    ] [telegram_client]: NEW MESSAGE received (428 chars): SENSEX 74000 PE
+
+GOOD ABOVE 950
+SL 887
+TGT 990_1050_1120
+
+Only Above With Some B...
+[2026-04-08 22:51:33] [INFO    ] [parser]: PARSE OK: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0] Lot=None Risk=HIGH
+[2026-04-08 22:51:33] [INFO    ] [telegram_client]: SIGNAL PARSED: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+[2026-04-08 22:51:33] [INFO    ] [telegram_client]: Signal saved to DB with ID: 69d68e9d547820a2dd681225
+[2026-04-08 22:51:33] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d68e9d547820a2dd681225: STARTING ORDER EXECUTION
+  Symbol: SENSEX 74000.0 PE
+  Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+  Total users: 2
+==================================================
+[2026-04-08 22:51:33] [INFO    ] [broker_integration]: User 'Samarth': Authenticating with angelone...
+[2026-04-08 22:51:33] [INFO    ] [brokers.angel_one]: Angel One: Initiating session for client 'S50055441'...
+[2026-04-08 22:51:33] [INFO    ] [brokers.angel_one]: Angel One: Auth SUCCESS for client 'S50055441' (154ms)
+[2026-04-08 22:51:33] [INFO    ] [broker_integration]: User 'Samarth': Auth SUCCESS. Placing bracket order...
+[2026-04-08 22:51:33] [INFO    ] [brokers.angel_one]: Angel One: Mapping instrument SENSEX 74000.0 PE via ScripMaster...
+[2026-04-08 22:51:33] [INFO    ] [scrip_master]: SCRIP LOOKUP: name=SENSEX, strike=74000.0, option_type=PE
+[2026-04-08 22:51:33] [INFO    ] [scrip_master]: SCRIP FOUND: SENSEX2640974000PE | token=866378 exchange=BFO expiry=09APR2026 lotsize=20 (lookup: 112.8ms)
+[2026-04-08 22:51:33] [INFO    ] [brokers.angel_one]: Angel One: Placing ROBO order — SENSEX2640974000PE Qty=20 Price=950.0 SL_diff=63.0 TGT_diff=40.0 Exchange=BFO
+[2026-04-08 22:51:34] [INFO    ] [brokers.angel_one]: Angel One: Order placed — OrderID=0408e9a2d623AO (76ms)
+[2026-04-08 22:51:34] [INFO    ] [broker_integration]: User 'Samarth': ORDER SUCCESS | SENSEX2640974000PE | OrderID=0408e9a2d623AO | Broker=angelone (345ms)
+[2026-04-08 22:51:34] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d68e9d547820a2dd681225: EXECUTION SUMMARY
+  Total Users: 2 | Eligible: 1 | Skipped: 1
+  Success: 1 | Failed: 0
+  Total Time: 0.38s
+==================================================
+[2026-04-08 22:51:57] [INFO    ] [main]: LOGIN SUCCESS: user='admin', role='admin'
+[2026-04-08 22:52:07] [INFO    ] [main]: USER CREATED: 'Sandeep' (email=Sandeep, role=user) by admin 'admin'
+[2026-04-08 22:52:19] [INFO    ] [main]: LOGIN SUCCESS: user='Sandeep', role='user'
+[2026-04-08 23:02:38] [INFO    ] [main]: ========== APPLICATION SHUTTING DOWN ==========

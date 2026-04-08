@@ -192,7 +192,7 @@
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8 relative">
 <!-- Field 1 -->
-<div class="space-y-2">
+<div class="space-y-2" id="wrapper-api-key">
 <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider">API Key</label>
 <div class="relative">
 <input id="broker-api-key" class="w-full bg-[#1b2025] border border-outline-variant/10 rounded-xl px-4 py-3.5 text-sm text-on-surface focus:ring-1 focus:ring-primary focus:border-primary transition-all tabular-nums" type="password" placeholder="Enter your API Key"/>
@@ -200,7 +200,7 @@
 </div>
 </div>
 <!-- Field 2 -->
-<div class="space-y-2">
+<div class="space-y-2" id="wrapper-client-code">
 <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider">Client Code</label>
 <input id="broker-client-code" class="w-full bg-[#1b2025] border border-outline-variant/10 rounded-xl px-4 py-3.5 text-sm text-on-surface focus:ring-1 focus:ring-primary focus:border-primary transition-all font-medium" placeholder="e.g. S123456" type="text"/>
 </div>
@@ -290,11 +290,14 @@ async function loadConfig() {
         
         // Populate fields based on activeBroker
         if (activeBroker === 'angelone') {
-            document.getElementById('broker-api-key').value = cfg.angelone_api_key || "";
+            document.getElementById('wrapper-api-key').classList.add('hidden');
+            
             document.getElementById('broker-client-code').value = cfg.angelone_client_code || "";
             document.getElementById('broker-pin').value = cfg.angelone_pin || "";
             document.getElementById('broker-totp').value = cfg.angelone_totp_secret || "";
         } else if (activeBroker === 'zerodha') {
+            document.getElementById('wrapper-api-key').classList.remove('hidden');
+            
             document.getElementById('broker-api-key').value = cfg.zerodha_api_key || "";
             document.getElementById('broker-client-code').value = cfg.zerodha_api_secret || "";
             document.getElementById('broker-pin').value = "";
@@ -318,7 +321,6 @@ document.getElementById('btn-save-broker').addEventListener('click', async () =>
         };
 
         if (activeBroker === 'angelone') {
-            payload.angelone_api_key = apiKey;
             payload.angelone_client_code = clientCode;
             payload.angelone_pin = pin;
             payload.angelone_totp_secret = totp;

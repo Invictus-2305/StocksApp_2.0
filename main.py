@@ -59,7 +59,6 @@ class ConfigUpdate(BaseModel):
     zerodha_api_key: str = None
     zerodha_api_secret: str = None
     broker_preference: str = None
-    angelone_api_key: str = None
     angelone_client_code: str = None
     angelone_pin: str = None
     angelone_totp_secret: str = None
@@ -69,7 +68,7 @@ class BrokerToggleRequest(BaseModel):
     enabled: bool
 
 REGISTERED_BROKERS = [
-    {"id": "angelone", "name": "Angel One", "icon": "trending_up", "configKey": "angelone_api_key"},
+    {"id": "angelone", "name": "Angel One", "icon": "trending_up", "configKey": "angelone_client_code"},
     {"id": "zerodha", "name": "Zerodha", "icon": "candlestick_chart", "configKey": "zerodha_api_key"},
     {"id": "stoxkart", "name": "Stoxkart", "icon": "show_chart", "configKey": None},
     {"id": "ibkr", "name": "Interactive Brokers", "icon": "language", "configKey": None},
@@ -304,9 +303,6 @@ async def update_configuration(config: ConfigUpdate, user=Depends(require_login)
     if config.broker_preference is not None:
         await save_user_config(username, "broker_preference", config.broker_preference)
         updated_keys.append(f"broker_preference={config.broker_preference}")
-    if config.angelone_api_key is not None:
-        await save_user_config(username, "angelone_api_key", config.angelone_api_key)
-        updated_keys.append("angelone_api_key")
     if config.angelone_client_code is not None:
         await save_user_config(username, "angelone_client_code", config.angelone_client_code)
         updated_keys.append("angelone_client_code")
