@@ -1,5 +1,4 @@
 import time
-import os
 import pyotp
 import logging
 from SmartApi import SmartConnect
@@ -15,21 +14,15 @@ class AngelOneBroker(BaseBroker):
 
     async def authenticate(self, user_config: dict) -> bool:
         """
-        Authenticate using Client Code, Password (PIN), and TOTP from the user,
-        plus the Master API Key from the server environment.
+        Authenticate using Client Code, Password (PIN), API Key, and TOTP.
         Sensitive credentials are NEVER logged.
         """
         client_code = user_config.get("angelone_client_code")
+        api_key = user_config.get("angelone_api_key")
         pin = user_config.get("angelone_pin")
         totp_secret = user_config.get("angelone_totp_secret")
         
-        api_key = os.getenv("ANGELONE_MASTER_API_KEY")
-        
-        if not api_key:
-            logger.error("ANGELONE_MASTER_API_KEY is not set in the environment.")
-            return False
-
-        if not all([client_code, pin, totp_secret]):
+        if not all([client_code, api_key, pin, totp_secret]):
             logger.error(f"Missing Angel One credentials for client '{client_code or 'UNKNOWN'}'.")
             return False
             
