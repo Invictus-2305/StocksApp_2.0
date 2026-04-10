@@ -57,8 +57,8 @@ class AngelOneBroker(BaseBroker):
                 logger.info(f"Angel One: Spoofing Public IP to '{spoofed_ip}' for client '{client_code}'")
                 
                 # Forcefully overwrite SmartConnect's hardcoded IP
-                self.smart_api.clientPublicIP = spoofed_ip
-                self.smart_api.clientLocalIP = spoofed_ip
+                self.smart_api.clientPublicIp = spoofed_ip
+                self.smart_api.clientLocalIp = spoofed_ip
                 
             if is_local_binding:
                 logger.info(f"Angel One: Binding outgoing network adapter to interface '{spoofed_ip}'")

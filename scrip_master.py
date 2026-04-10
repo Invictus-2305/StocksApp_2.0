@@ -105,7 +105,14 @@ class ScripMaster:
             valid_expiry = results[results['expiry'] != ""].copy()
             if not valid_expiry.empty:
                 valid_expiry['expiry_dt'] = pd.to_datetime(valid_expiry['expiry'], format='%d%b%Y')
-                nearest = valid_expiry.sort_values(by='expiry_dt').iloc[0]
+                # Filter out expired contracts (midnight of today)
+                now = pd.Timestamp.now().normalize()
+                future_expiry = valid_expiry[valid_expiry['expiry_dt'] >= now]
+                
+                if not future_expiry.empty:
+                    nearest = future_expiry.sort_values(by='expiry_dt').iloc[0]
+                else:
+                    nearest = valid_expiry.sort_values(by='expiry_dt').iloc[-1]
             else:
                 nearest = results.iloc[0]
         else:
