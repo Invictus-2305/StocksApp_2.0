@@ -7,6 +7,8 @@ ENV/
 env.bak/
 venv.bak/
 
+logs/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -116,4 +118,3 @@ Thumbs.db
 # Project specific
 trading_bot_session.session
 trading_bot_session.session-journal
-logs/
