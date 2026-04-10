@@ -63,6 +63,13 @@ class AngelOneBroker(BaseBroker):
             if is_local_binding:
                 logger.info(f"Angel One: Binding outgoing network adapter to interface '{spoofed_ip}'")
                 from requests_toolbelt.adapters import source
+                import requests
+                
+                # If the SDK uses the raw 'requests' module instead of a Session, force an upgrade
+                if not hasattr(self.smart_api.reqsession, 'mount'):
+                    logger.info("Angel One: Upgrading SmartConnect executor to a persistent requests.Session()")
+                    self.smart_api.reqsession = requests.Session()
+                
                 # Attach the Source Address bound adapter to SmartConnect's internal session
                 source_adapter = source.SourceAddressAdapter(spoofed_ip)
                 self.smart_api.reqsession.mount('http://', source_adapter)
