@@ -116,3 +116,4 @@ Thumbs.db
 # Project specific
 trading_bot_session.session
 trading_bot_session.session-journal
+logs/

@@ -15,3 +15,4 @@ smartapi-python
 pydantic
 python-multipart
 pytest
+requests-toolbelt

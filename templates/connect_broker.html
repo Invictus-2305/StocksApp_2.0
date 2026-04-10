@@ -288,7 +288,6 @@ async function loadConfig() {
         if (!res.ok) return;
         const cfg = await res.json();
         
-        // Populate fields based on activeBroker
         if (activeBroker === 'angelone') {
             document.getElementById('broker-api-key').value = cfg.angelone_api_key || "";
             document.getElementById('broker-client-code').value = cfg.angelone_client_code || "";

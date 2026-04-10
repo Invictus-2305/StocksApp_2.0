@@ -21,6 +21,7 @@ class AngelOneBroker(BaseBroker):
         api_key = user_config.get("angelone_api_key")
         pin = user_config.get("angelone_pin")
         totp_secret = user_config.get("angelone_totp_secret")
+        proxy_url = user_config.get("angelone_proxy_url")
         
         if not all([client_code, api_key, pin, totp_secret]):
             logger.error(f"Missing Angel One credentials for client '{client_code or 'UNKNOWN'}'.")
@@ -30,7 +31,43 @@ class AngelOneBroker(BaseBroker):
             t0 = time.time()
             logger.info(f"Angel One: Initiating session for client '{client_code}'...")
             
-            self.smart_api = SmartConnect(api_key=api_key)
+            # Handle Proxy OR Local IP Source Binding
+            proxy_dict = None
+            is_local_binding = False
+            spoofed_ip = None
+            
+            if proxy_url:
+                import ipaddress
+                from urllib.parse import urlparse
+                
+                try:
+                    # Check if the user literally just passed an IP (e.g. 216.48.181.84)
+                    ipaddress.ip_address(proxy_url)
+                    is_local_binding = True
+                    spoofed_ip = proxy_url
+                except ValueError:
+                    # It's a standard proxy URL (http://user:pass@ip:port)
+                    proxy_dict = {"http": proxy_url, "https": proxy_url}
+                    parsed = urlparse(proxy_url)
+                    spoofed_ip = parsed.hostname if parsed.hostname else proxy_url
+                    
+            self.smart_api = SmartConnect(api_key=api_key, proxies=proxy_dict)
+            
+            if spoofed_ip:
+                logger.info(f"Angel One: Spoofing Public IP to '{spoofed_ip}' for client '{client_code}'")
+                
+                # Forcefully overwrite SmartConnect's hardcoded IP
+                self.smart_api.clientPublicIP = spoofed_ip
+                self.smart_api.clientLocalIP = spoofed_ip
+                
+            if is_local_binding:
+                logger.info(f"Angel One: Binding outgoing network adapter to interface '{spoofed_ip}'")
+                from requests_toolbelt.adapters import source
+                # Attach the Source Address bound adapter to SmartConnect's internal session
+                source_adapter = source.SourceAddressAdapter(spoofed_ip)
+                self.smart_api.reqsession.mount('http://', source_adapter)
+                self.smart_api.reqsession.mount('https://', source_adapter)
+                
             totp = pyotp.TOTP(totp_secret).now()
             data = self.smart_api.generateSession(client_code, pin, totp)
             

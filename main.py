@@ -63,6 +63,7 @@ class ConfigUpdate(BaseModel):
     angelone_client_code: str = None
     angelone_pin: str = None
     angelone_totp_secret: str = None
+    angelone_proxy_url: str = None
 
 class BrokerToggleRequest(BaseModel):
     broker_id: str
@@ -230,6 +231,20 @@ async def api_delete_user(username: str, user=Depends(require_admin)):
     logger.info(f"USER DELETED: '{username}' by admin '{user['username']}'")
     return {"status": "deleted"}
 
+class ProxyUpdateRequest(BaseModel):
+    proxy_url: str = None
+
+@app.post("/api/admin/users/{username}/proxy")
+async def api_update_user_proxy(username: str, data: ProxyUpdateRequest, user=Depends(require_admin)):
+    # Check if user exists
+    target_user = await get_user(username)
+    if not target_user:
+        raise HTTPException(status_code=404, detail="User not found")
+        
+    await save_user_config(username, "angelone_proxy_url", data.proxy_url)
+    logger.info(f"PROXY UPDATED: Admin '{user['username']}' set proxy='{data.proxy_url}' for user '{username}'")
+    return {"status": "success", "proxy_url": data.proxy_url}
+
 # ---- BROKER REGISTRY API ----
 @app.get("/api/brokers")
 async def api_get_brokers(user=Depends(require_login)):
@@ -316,6 +331,9 @@ async def update_configuration(config: ConfigUpdate, user=Depends(require_login)
     if config.angelone_totp_secret is not None:
         await save_user_config(username, "angelone_totp_secret", config.angelone_totp_secret)
         updated_keys.append("angelone_totp_secret")
+    if config.angelone_proxy_url is not None:
+        await save_user_config(username, "angelone_proxy_url", config.angelone_proxy_url)
+        updated_keys.append("angelone_proxy_url")
 
     logger.info(f"CONFIG UPDATED by '{username}': [{', '.join(updated_keys)}]")
     return {"status": "success"}

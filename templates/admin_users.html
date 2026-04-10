@@ -208,9 +208,16 @@
             </td>
             <td class="px-6 py-4 text-on-surface-variant text-xs">${created}</td>
             <td class="px-6 py-4 text-right">
-                ${isAdmin ? '' : `<button onclick="deleteUser('${u.username}')" class="p-2 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-lg transition-all" title="Delete user">
-                    <span class="material-symbols-outlined text-lg">delete</span>
-                </button>`}
+                ${isAdmin ? '' : `
+                <div class="flex items-center justify-end gap-2">
+                    <button onclick="setProxy('${u.username}', '${u.broker_config?.angelone_proxy_url || ''}')" class="p-2 text-on-surface-variant hover:text-primary hover:bg-primary/10 rounded-lg transition-all" title="Assign Routing IP / Proxy">
+                        <span class="material-symbols-outlined text-lg">router</span>
+                    </button>
+                    <button onclick="deleteUser('${u.username}')" class="p-2 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-lg transition-all" title="Delete user">
+                        <span class="material-symbols-outlined text-lg">delete</span>
+                    </button>
+                </div>
+                `}
             </td>
         `;
         return tr;
@@ -242,6 +249,29 @@
             }
         } catch(e) {
             alert('Connection error.');
+        }
+    }
+
+    async function setProxy(username, currentProxy) {
+        const proxy_url = prompt(`Enter Static IP or Proxy URL for ${username} (Angel One only):\n\nLeave blank to remove. Example: 216.48.181.84`, currentProxy || '');
+        if (proxy_url === null) return; // User cancelled
+
+        try {
+            const res = await fetch(`/api/admin/users/${username}/proxy`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ proxy_url: proxy_url.trim() || null })
+            });
+
+            if (res.ok) {
+                showToast('IP Binding Updated', `Assigned routing IP for ${username}`);
+                loadUsers();
+            } else {
+                const data = await res.json();
+                showToast('Error', data.detail || 'Failed to assign proxy');
+            }
+        } catch (e) {
+            showToast('Error', 'Network error');
         }
     }
 

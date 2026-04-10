@@ -241,3 +241,443 @@ TGT 163_200_250
 [2026-04-04 23:28:06] [INFO    ] [main]: LOGIN SUCCESS: user='Samarth', role='user'
 [2026-04-04 23:28:11] [INFO    ] [main]: CONFIG UPDATED by 'Samarth': [broker_preference=angelone]
 [2026-04-04 23:29:59] [INFO    ] [main]: ========== APPLICATION SHUTTING DOWN ==========
+[2026-04-10 19:35:04] [INFO    ] [logger]: Logging initialized — file: /Users/samarthgayakhe/stocks and options/backend/logs/trading_app.log, level: INFO
+[2026-04-10 19:35:04] [INFO    ] [main]: ========== APPLICATION STARTING ==========
+[2026-04-10 19:35:04] [INFO    ] [main]: Database initialized.
+[2026-04-10 19:35:05] [INFO    ] [telegram_client]: Telegram connected. Listening to channel: -5009133651
+[2026-04-10 19:35:05] [INFO    ] [telegram_client]: Telegram listener started. Waiting for messages...
+[2026-04-10 19:35:05] [INFO    ] [main]: ========== APPLICATION READY ==========
+[2026-04-10 19:35:30] [INFO    ] [telegram_client]: NEW MESSAGE received (428 chars): SENSEX 74000 PE
+
+GOOD ABOVE 950
+SL 887
+TGT 990_1050_1120
+
+Only Above With Some B...
+[2026-04-10 19:35:30] [INFO    ] [parser]: PARSE OK: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0] Lot=None Risk=HIGH
+[2026-04-10 19:35:30] [INFO    ] [telegram_client]: SIGNAL PARSED: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+[2026-04-10 19:35:30] [INFO    ] [telegram_client]: Signal saved to DB with ID: 69d903aa53f65ab6310115af
+[2026-04-10 19:35:30] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d903aa53f65ab6310115af: STARTING ORDER EXECUTION
+  Symbol: SENSEX 74000.0 PE
+  Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+  Total users: 3
+==================================================
+[2026-04-10 19:35:30] [INFO    ] [broker_integration]: User 'Samarth': Authenticating with angelone...
+[2026-04-10 19:35:30] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'S50055441'.
+[2026-04-10 19:35:30] [ERROR   ] [broker_integration]: User 'Samarth': Authentication FAILED for broker 'angelone'.
+[2026-04-10 19:35:30] [INFO    ] [broker_integration]: User 'Sandeep': Authenticating with angelone...
+[2026-04-10 19:35:30] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'AAAL652463'.
+[2026-04-10 19:35:30] [ERROR   ] [broker_integration]: User 'Sandeep': Authentication FAILED for broker 'angelone'.
+[2026-04-10 19:35:30] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d903aa53f65ab6310115af: EXECUTION SUMMARY
+  Total Users: 3 | Eligible: 2 | Skipped: 1
+  Success: 0 | Failed: 2
+  Total Time: 0.03s
+==================================================
+[2026-04-10 19:46:53] [INFO    ] [telegram_client]: NEW MESSAGE received (428 chars): SENSEX 74000 PE
+
+GOOD ABOVE 950
+SL 887
+TGT 990_1050_1120
+
+Only Above With Some B...
+[2026-04-10 19:46:53] [INFO    ] [parser]: PARSE OK: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0] Lot=None Risk=HIGH
+[2026-04-10 19:46:53] [INFO    ] [telegram_client]: SIGNAL PARSED: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+[2026-04-10 19:46:53] [INFO    ] [telegram_client]: Signal saved to DB with ID: 69d9065553f65ab6310115b0
+[2026-04-10 19:46:53] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d9065553f65ab6310115b0: STARTING ORDER EXECUTION
+  Symbol: SENSEX 74000.0 PE
+  Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+  Total users: 3
+==================================================
+[2026-04-10 19:46:53] [INFO    ] [broker_integration]: User 'Samarth': Authenticating with angelone...
+[2026-04-10 19:46:53] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'S50055441'.
+[2026-04-10 19:46:53] [ERROR   ] [broker_integration]: User 'Samarth': Authentication FAILED for broker 'angelone'.
+[2026-04-10 19:46:53] [INFO    ] [broker_integration]: User 'Sandeep': Authenticating with angelone...
+[2026-04-10 19:46:53] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'AAAL652463'.
+[2026-04-10 19:46:53] [ERROR   ] [broker_integration]: User 'Sandeep': Authentication FAILED for broker 'angelone'.
+[2026-04-10 19:46:53] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d9065553f65ab6310115b0: EXECUTION SUMMARY
+  Total Users: 3 | Eligible: 2 | Skipped: 1
+  Success: 0 | Failed: 2
+  Total Time: 0.03s
+==================================================
+[2026-04-10 19:49:10] [INFO    ] [telegram_client]: NEW MESSAGE received (428 chars): SENSEX 74000 PE
+
+GOOD ABOVE 950
+SL 887
+TGT 990_1050_1120
+
+Only Above With Some B...
+[2026-04-10 19:49:10] [INFO    ] [parser]: PARSE OK: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0] Lot=None Risk=HIGH
+[2026-04-10 19:49:10] [INFO    ] [telegram_client]: SIGNAL PARSED: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+[2026-04-10 19:49:10] [INFO    ] [telegram_client]: Signal saved to DB with ID: 69d906de53f65ab6310115b1
+[2026-04-10 19:49:10] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d906de53f65ab6310115b1: STARTING ORDER EXECUTION
+  Symbol: SENSEX 74000.0 PE
+  Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+  Total users: 3
+==================================================
+[2026-04-10 19:49:10] [INFO    ] [broker_integration]: User 'Samarth': Authenticating with angelone...
+[2026-04-10 19:49:10] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'S50055441'.
+[2026-04-10 19:49:10] [ERROR   ] [broker_integration]: User 'Samarth': Authentication FAILED for broker 'angelone'.
+[2026-04-10 19:49:10] [INFO    ] [broker_integration]: User 'Sandeep': Authenticating with angelone...
+[2026-04-10 19:49:10] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'AAAL652463'.
+[2026-04-10 19:49:10] [ERROR   ] [broker_integration]: User 'Sandeep': Authentication FAILED for broker 'angelone'.
+[2026-04-10 19:49:10] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d906de53f65ab6310115b1: EXECUTION SUMMARY
+  Total Users: 3 | Eligible: 2 | Skipped: 1
+  Success: 0 | Failed: 2
+  Total Time: 0.03s
+==================================================
+[2026-04-10 19:51:46] [INFO    ] [telegram_client]: NEW MESSAGE received (428 chars): SENSEX 74000 PE
+
+GOOD ABOVE 950
+SL 887
+TGT 990_1050_1120
+
+Only Above With Some B...
+[2026-04-10 19:51:46] [INFO    ] [parser]: PARSE OK: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0] Lot=None Risk=HIGH
+[2026-04-10 19:51:46] [INFO    ] [telegram_client]: SIGNAL PARSED: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+[2026-04-10 19:51:46] [INFO    ] [telegram_client]: Signal saved to DB with ID: 69d9077a53f65ab6310115b2
+[2026-04-10 19:51:46] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d9077a53f65ab6310115b2: STARTING ORDER EXECUTION
+  Symbol: SENSEX 74000.0 PE
+  Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+  Total users: 3
+==================================================
+[2026-04-10 19:51:46] [INFO    ] [broker_integration]: User 'Samarth': Authenticating with angelone...
+[2026-04-10 19:51:46] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'S50055441'.
+[2026-04-10 19:51:46] [ERROR   ] [broker_integration]: User 'Samarth': Authentication FAILED for broker 'angelone'.
+[2026-04-10 19:51:46] [INFO    ] [broker_integration]: User 'Sandeep': Authenticating with angelone...
+[2026-04-10 19:51:46] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'AAAL652463'.
+[2026-04-10 19:51:46] [ERROR   ] [broker_integration]: User 'Sandeep': Authentication FAILED for broker 'angelone'.
+[2026-04-10 19:51:46] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d9077a53f65ab6310115b2: EXECUTION SUMMARY
+  Total Users: 3 | Eligible: 2 | Skipped: 1
+  Success: 0 | Failed: 2
+  Total Time: 0.03s
+==================================================
+[2026-04-10 19:52:49] [INFO    ] [telegram_client]: NEW MESSAGE received (428 chars): SENSEX 74000 PE
+
+GOOD ABOVE 950
+SL 887
+TGT 990_1050_1120
+
+Only Above With Some B...
+[2026-04-10 19:52:49] [INFO    ] [parser]: PARSE OK: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0] Lot=None Risk=HIGH
+[2026-04-10 19:52:49] [INFO    ] [telegram_client]: SIGNAL PARSED: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+[2026-04-10 19:52:49] [INFO    ] [telegram_client]: Signal saved to DB with ID: 69d907b953f65ab6310115b3
+[2026-04-10 19:52:49] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d907b953f65ab6310115b3: STARTING ORDER EXECUTION
+  Symbol: SENSEX 74000.0 PE
+  Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+  Total users: 3
+==================================================
+[2026-04-10 19:52:49] [INFO    ] [broker_integration]: User 'Samarth': Authenticating with angelone...
+[2026-04-10 19:52:49] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'S50055441'.
+[2026-04-10 19:52:49] [ERROR   ] [broker_integration]: User 'Samarth': Authentication FAILED for broker 'angelone'.
+[2026-04-10 19:52:49] [INFO    ] [broker_integration]: User 'Sandeep': Authenticating with angelone...
+[2026-04-10 19:52:49] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'AAAL652463'.
+[2026-04-10 19:52:49] [ERROR   ] [broker_integration]: User 'Sandeep': Authentication FAILED for broker 'angelone'.
+[2026-04-10 19:52:49] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d907b953f65ab6310115b3: EXECUTION SUMMARY
+  Total Users: 3 | Eligible: 2 | Skipped: 1
+  Success: 0 | Failed: 2
+  Total Time: 0.03s
+==================================================
+[2026-04-10 19:53:38] [INFO    ] [telegram_client]: NEW MESSAGE received (428 chars): SENSEX 74000 PE
+
+GOOD ABOVE 950
+SL 887
+TGT 990_1050_1120
+
+Only Above With Some B...
+[2026-04-10 19:53:38] [INFO    ] [parser]: PARSE OK: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0] Lot=None Risk=HIGH
+[2026-04-10 19:53:38] [INFO    ] [telegram_client]: SIGNAL PARSED: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+[2026-04-10 19:53:38] [INFO    ] [telegram_client]: Signal saved to DB with ID: 69d907ea53f65ab6310115b4
+[2026-04-10 19:53:38] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d907ea53f65ab6310115b4: STARTING ORDER EXECUTION
+  Symbol: SENSEX 74000.0 PE
+  Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+  Total users: 3
+==================================================
+[2026-04-10 19:53:38] [INFO    ] [broker_integration]: User 'Samarth': Authenticating with angelone...
+[2026-04-10 19:53:38] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'S50055441'.
+[2026-04-10 19:53:38] [ERROR   ] [broker_integration]: User 'Samarth': Authentication FAILED for broker 'angelone'.
+[2026-04-10 19:53:38] [INFO    ] [broker_integration]: User 'Sandeep': Authenticating with angelone...
+[2026-04-10 19:53:38] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'AAAL652463'.
+[2026-04-10 19:53:38] [ERROR   ] [broker_integration]: User 'Sandeep': Authentication FAILED for broker 'angelone'.
+[2026-04-10 19:53:38] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d907ea53f65ab6310115b4: EXECUTION SUMMARY
+  Total Users: 3 | Eligible: 2 | Skipped: 1
+  Success: 0 | Failed: 2
+  Total Time: 0.03s
+==================================================
+[2026-04-10 19:54:39] [INFO    ] [telegram_client]: NEW MESSAGE received (428 chars): SENSEX 74000 PE
+
+GOOD ABOVE 950
+SL 887
+TGT 990_1050_1120
+
+Only Above With Some B...
+[2026-04-10 19:54:39] [INFO    ] [parser]: PARSE OK: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0] Lot=None Risk=HIGH
+[2026-04-10 19:54:39] [INFO    ] [telegram_client]: SIGNAL PARSED: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+[2026-04-10 19:54:39] [INFO    ] [telegram_client]: Signal saved to DB with ID: 69d9082753f65ab6310115b5
+[2026-04-10 19:54:39] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d9082753f65ab6310115b5: STARTING ORDER EXECUTION
+  Symbol: SENSEX 74000.0 PE
+  Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+  Total users: 3
+==================================================
+[2026-04-10 19:54:39] [INFO    ] [broker_integration]: User 'Samarth': Authenticating with angelone...
+[2026-04-10 19:54:39] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'S50055441'.
+[2026-04-10 19:54:39] [ERROR   ] [broker_integration]: User 'Samarth': Authentication FAILED for broker 'angelone'.
+[2026-04-10 19:54:39] [INFO    ] [broker_integration]: User 'Sandeep': Authenticating with angelone...
+[2026-04-10 19:54:39] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'AAAL652463'.
+[2026-04-10 19:54:39] [ERROR   ] [broker_integration]: User 'Sandeep': Authentication FAILED for broker 'angelone'.
+[2026-04-10 19:54:39] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d9082753f65ab6310115b5: EXECUTION SUMMARY
+  Total Users: 3 | Eligible: 2 | Skipped: 1
+  Success: 0 | Failed: 2
+  Total Time: 0.03s
+==================================================
+[2026-04-10 19:56:56] [INFO    ] [telegram_client]: NEW MESSAGE received (428 chars): SENSEX 74000 PE
+
+GOOD ABOVE 950
+SL 887
+TGT 990_1050_1120
+
+Only Above With Some B...
+[2026-04-10 19:56:56] [INFO    ] [parser]: PARSE OK: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0] Lot=None Risk=HIGH
+[2026-04-10 19:56:56] [INFO    ] [telegram_client]: SIGNAL PARSED: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+[2026-04-10 19:56:56] [INFO    ] [telegram_client]: Signal saved to DB with ID: 69d908b053f65ab6310115b6
+[2026-04-10 19:56:56] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d908b053f65ab6310115b6: STARTING ORDER EXECUTION
+  Symbol: SENSEX 74000.0 PE
+  Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+  Total users: 3
+==================================================
+[2026-04-10 19:56:56] [INFO    ] [broker_integration]: User 'Samarth': Authenticating with angelone...
+[2026-04-10 19:56:56] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'S50055441'.
+[2026-04-10 19:56:56] [ERROR   ] [broker_integration]: User 'Samarth': Authentication FAILED for broker 'angelone'.
+[2026-04-10 19:56:56] [INFO    ] [broker_integration]: User 'Sandeep': Authenticating with angelone...
+[2026-04-10 19:56:56] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'AAAL652463'.
+[2026-04-10 19:56:56] [ERROR   ] [broker_integration]: User 'Sandeep': Authentication FAILED for broker 'angelone'.
+[2026-04-10 19:56:56] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d908b053f65ab6310115b6: EXECUTION SUMMARY
+  Total Users: 3 | Eligible: 2 | Skipped: 1
+  Success: 0 | Failed: 2
+  Total Time: 0.03s
+==================================================
+[2026-04-10 19:58:30] [INFO    ] [telegram_client]: NEW MESSAGE received (428 chars): SENSEX 74000 PE
+
+GOOD ABOVE 950
+SL 887
+TGT 990_1050_1120
+
+Only Above With Some B...
+[2026-04-10 19:58:30] [INFO    ] [parser]: PARSE OK: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0] Lot=None Risk=HIGH
+[2026-04-10 19:58:30] [INFO    ] [telegram_client]: SIGNAL PARSED: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+[2026-04-10 19:58:30] [INFO    ] [telegram_client]: Signal saved to DB with ID: 69d9090e53f65ab6310115b7
+[2026-04-10 19:58:30] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d9090e53f65ab6310115b7: STARTING ORDER EXECUTION
+  Symbol: SENSEX 74000.0 PE
+  Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+  Total users: 3
+==================================================
+[2026-04-10 19:58:30] [INFO    ] [broker_integration]: User 'Samarth': Authenticating with angelone...
+[2026-04-10 19:58:30] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'S50055441'.
+[2026-04-10 19:58:30] [ERROR   ] [broker_integration]: User 'Samarth': Authentication FAILED for broker 'angelone'.
+[2026-04-10 19:58:30] [INFO    ] [broker_integration]: User 'Sandeep': Authenticating with angelone...
+[2026-04-10 19:58:30] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'AAAL652463'.
+[2026-04-10 19:58:30] [ERROR   ] [broker_integration]: User 'Sandeep': Authentication FAILED for broker 'angelone'.
+[2026-04-10 19:58:30] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d9090e53f65ab6310115b7: EXECUTION SUMMARY
+  Total Users: 3 | Eligible: 2 | Skipped: 1
+  Success: 0 | Failed: 2
+  Total Time: 0.03s
+==================================================
+[2026-04-10 23:00:13] [WARNING ] [telethon.network.mtprotostate]: Server resent the older message 7627184228357221377, ignoring
+[2026-04-10 23:15:49] [INFO    ] [telegram_client]: NEW MESSAGE received (428 chars): SENSEX 74000 PE
+
+GOOD ABOVE 950
+SL 887
+TGT 990_1050_1120
+
+Only Above With Some B...
+[2026-04-10 23:15:49] [INFO    ] [parser]: PARSE OK: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0] Lot=None Risk=HIGH
+[2026-04-10 23:15:49] [INFO    ] [telegram_client]: SIGNAL PARSED: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+[2026-04-10 23:15:49] [INFO    ] [telegram_client]: Signal saved to DB with ID: 69d9374d53f65ab6310115b8
+[2026-04-10 23:15:49] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d9374d53f65ab6310115b8: STARTING ORDER EXECUTION
+  Symbol: SENSEX 74000.0 PE
+  Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+  Total users: 3
+==================================================
+[2026-04-10 23:15:49] [INFO    ] [broker_integration]: User 'Samarth': Authenticating with angelone...
+[2026-04-10 23:15:49] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'S50055441'.
+[2026-04-10 23:15:49] [ERROR   ] [broker_integration]: User 'Samarth': Authentication FAILED for broker 'angelone'.
+[2026-04-10 23:15:49] [INFO    ] [broker_integration]: User 'Sandeep': Authenticating with angelone...
+[2026-04-10 23:15:49] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'AAAL652463'.
+[2026-04-10 23:15:49] [ERROR   ] [broker_integration]: User 'Sandeep': Authentication FAILED for broker 'angelone'.
+[2026-04-10 23:15:49] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d9374d53f65ab6310115b8: EXECUTION SUMMARY
+  Total Users: 3 | Eligible: 2 | Skipped: 1
+  Success: 0 | Failed: 2
+  Total Time: 0.03s
+==================================================
+[2026-04-10 23:19:03] [INFO    ] [telegram_client]: NEW MESSAGE received (428 chars): SENSEX 74000 PE
+
+GOOD ABOVE 950
+SL 887
+TGT 990_1050_1120
+
+Only Above With Some B...
+[2026-04-10 23:19:03] [INFO    ] [parser]: PARSE OK: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0] Lot=None Risk=HIGH
+[2026-04-10 23:19:03] [INFO    ] [telegram_client]: SIGNAL PARSED: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+[2026-04-10 23:19:03] [INFO    ] [telegram_client]: Signal saved to DB with ID: 69d9380f53f65ab6310115b9
+[2026-04-10 23:19:03] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d9380f53f65ab6310115b9: STARTING ORDER EXECUTION
+  Symbol: SENSEX 74000.0 PE
+  Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+  Total users: 3
+==================================================
+[2026-04-10 23:19:03] [INFO    ] [broker_integration]: User 'Samarth': Authenticating with angelone...
+[2026-04-10 23:19:03] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'S50055441'.
+[2026-04-10 23:19:03] [ERROR   ] [broker_integration]: User 'Samarth': Authentication FAILED for broker 'angelone'.
+[2026-04-10 23:19:03] [INFO    ] [broker_integration]: User 'Sandeep': Authenticating with angelone...
+[2026-04-10 23:19:03] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'AAAL652463'.
+[2026-04-10 23:19:03] [ERROR   ] [broker_integration]: User 'Sandeep': Authentication FAILED for broker 'angelone'.
+[2026-04-10 23:19:03] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d9380f53f65ab6310115b9: EXECUTION SUMMARY
+  Total Users: 3 | Eligible: 2 | Skipped: 1
+  Success: 0 | Failed: 2
+  Total Time: 0.03s
+==================================================
+[2026-04-10 23:22:54] [INFO    ] [telegram_client]: NEW MESSAGE received (428 chars): SENSEX 74000 PE
+
+GOOD ABOVE 950
+SL 887
+TGT 990_1050_1120
+
+Only Above With Some B...
+[2026-04-10 23:22:54] [INFO    ] [parser]: PARSE OK: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0] Lot=None Risk=HIGH
+[2026-04-10 23:22:54] [INFO    ] [telegram_client]: SIGNAL PARSED: SENSEX 74000.0 PE | Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+[2026-04-10 23:22:54] [INFO    ] [telegram_client]: Signal saved to DB with ID: 69d938f653f65ab6310115ba
+[2026-04-10 23:22:54] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d938f653f65ab6310115ba: STARTING ORDER EXECUTION
+  Symbol: SENSEX 74000.0 PE
+  Entry=950.0 SL=887.0 TGT=[990.0, 1050.0, 1120.0]
+  Total users: 3
+==================================================
+[2026-04-10 23:22:54] [INFO    ] [broker_integration]: User 'Samarth': Authenticating with angelone...
+[2026-04-10 23:22:54] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'S50055441'.
+[2026-04-10 23:22:54] [ERROR   ] [broker_integration]: User 'Samarth': Authentication FAILED for broker 'angelone'.
+[2026-04-10 23:22:54] [INFO    ] [broker_integration]: User 'Sandeep': Authenticating with angelone...
+[2026-04-10 23:22:54] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'AAAL652463'.
+[2026-04-10 23:22:54] [ERROR   ] [broker_integration]: User 'Sandeep': Authentication FAILED for broker 'angelone'.
+[2026-04-10 23:22:54] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d938f653f65ab6310115ba: EXECUTION SUMMARY
+  Total Users: 3 | Eligible: 2 | Skipped: 1
+  Success: 0 | Failed: 2
+  Total Time: 0.03s
+==================================================
+[2026-04-10 23:28:23] [INFO    ] [telegram_client]: NEW MESSAGE received (425 chars): NIFTY 22900 PE
+
+GOOD ABOVE 190
+SL 170
+TGT 200_215_235
+
+Only Above With Some Buff...
+[2026-04-10 23:28:23] [INFO    ] [parser]: PARSE OK: NIFTY 22900.0 PE | Entry=190.0 SL=170.0 TGT=[200.0, 215.0, 235.0] Lot=None Risk=HIGH
+[2026-04-10 23:28:23] [INFO    ] [telegram_client]: SIGNAL PARSED: NIFTY 22900.0 PE | Entry=190.0 SL=170.0 TGT=[200.0, 215.0, 235.0]
+[2026-04-10 23:28:23] [INFO    ] [telegram_client]: Signal saved to DB with ID: 69d93a3f53f65ab6310115bb
+[2026-04-10 23:28:23] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d93a3f53f65ab6310115bb: STARTING ORDER EXECUTION
+  Symbol: NIFTY 22900.0 PE
+  Entry=190.0 SL=170.0 TGT=[200.0, 215.0, 235.0]
+  Total users: 3
+==================================================
+[2026-04-10 23:28:23] [INFO    ] [broker_integration]: User 'Samarth': Authenticating with angelone...
+[2026-04-10 23:28:23] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'S50055441'.
+[2026-04-10 23:28:23] [ERROR   ] [broker_integration]: User 'Samarth': Authentication FAILED for broker 'angelone'.
+[2026-04-10 23:28:23] [INFO    ] [broker_integration]: User 'Sandeep': Authenticating with angelone...
+[2026-04-10 23:28:23] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'AAAL652463'.
+[2026-04-10 23:28:23] [ERROR   ] [broker_integration]: User 'Sandeep': Authentication FAILED for broker 'angelone'.
+[2026-04-10 23:28:23] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d93a3f53f65ab6310115bb: EXECUTION SUMMARY
+  Total Users: 3 | Eligible: 2 | Skipped: 1
+  Success: 0 | Failed: 2
+  Total Time: 0.03s
+==================================================
+[2026-04-10 23:30:34] [INFO    ] [telegram_client]: NEW MESSAGE received (425 chars): NIFTY 22900 PE
+
+GOOD ABOVE 190
+SL 170
+TGT 200_215_235
+
+Only Above With Some Buff...
+[2026-04-10 23:30:34] [INFO    ] [parser]: PARSE OK: NIFTY 22900.0 PE | Entry=190.0 SL=170.0 TGT=[200.0, 215.0, 235.0] Lot=None Risk=HIGH
+[2026-04-10 23:30:34] [INFO    ] [telegram_client]: SIGNAL PARSED: NIFTY 22900.0 PE | Entry=190.0 SL=170.0 TGT=[200.0, 215.0, 235.0]
+[2026-04-10 23:30:34] [INFO    ] [telegram_client]: Signal saved to DB with ID: 69d93ac253f65ab6310115bc
+[2026-04-10 23:30:34] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d93ac253f65ab6310115bc: STARTING ORDER EXECUTION
+  Symbol: NIFTY 22900.0 PE
+  Entry=190.0 SL=170.0 TGT=[200.0, 215.0, 235.0]
+  Total users: 3
+==================================================
+[2026-04-10 23:30:34] [INFO    ] [broker_integration]: User 'Samarth': Authenticating with angelone...
+[2026-04-10 23:30:34] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'S50055441'.
+[2026-04-10 23:30:34] [ERROR   ] [broker_integration]: User 'Samarth': Authentication FAILED for broker 'angelone'.
+[2026-04-10 23:30:34] [INFO    ] [broker_integration]: User 'Sandeep': Authenticating with angelone...
+[2026-04-10 23:30:34] [ERROR   ] [brokers.angel_one]: Missing Angel One credentials for client 'AAAL652463'.
+[2026-04-10 23:30:34] [ERROR   ] [broker_integration]: User 'Sandeep': Authentication FAILED for broker 'angelone'.
+[2026-04-10 23:30:34] [INFO    ] [broker_integration]: ==================================================
+  SIGNAL 69d93ac253f65ab6310115bc: EXECUTION SUMMARY
+  Total Users: 3 | Eligible: 2 | Skipped: 1
+  Success: 0 | Failed: 2
+  Total Time: 0.04s
+==================================================
+[2026-04-10 23:56:55] [INFO    ] [main]: ========== APPLICATION SHUTTING DOWN ==========
+[2026-04-10 23:57:01] [INFO    ] [logger]: Logging initialized — file: /Users/samarthgayakhe/stocks and options/backend/logs/trading_app.log, level: INFO
+[2026-04-10 23:57:01] [INFO    ] [main]: ========== APPLICATION STARTING ==========
+[2026-04-10 23:57:01] [INFO    ] [main]: Database initialized.
+[2026-04-10 23:57:02] [INFO    ] [telegram_client]: Telegram connected. Listening to channel: -5009133651
+[2026-04-10 23:57:02] [INFO    ] [telegram_client]: Telegram listener started. Waiting for messages...
+[2026-04-10 23:57:02] [INFO    ] [main]: ========== APPLICATION READY ==========
+[2026-04-10 23:57:41] [INFO    ] [main]: ========== APPLICATION SHUTTING DOWN ==========
+[2026-04-10 23:57:44] [INFO    ] [logger]: Logging initialized — file: /Users/samarthgayakhe/stocks and options/backend/logs/trading_app.log, level: INFO
+[2026-04-10 23:57:44] [INFO    ] [main]: ========== APPLICATION STARTING ==========
+[2026-04-10 23:57:44] [INFO    ] [main]: Database initialized.
+[2026-04-10 23:57:44] [INFO    ] [telegram_client]: Telegram connected. Listening to channel: -5009133651
+[2026-04-10 23:57:44] [INFO    ] [telegram_client]: Telegram listener started. Waiting for messages...
+[2026-04-10 23:57:44] [INFO    ] [main]: ========== APPLICATION READY ==========
+[2026-04-10 23:58:34] [INFO    ] [main]: ========== APPLICATION SHUTTING DOWN ==========
+[2026-04-11 00:06:55] [INFO    ] [logger]: Logging initialized — file: /Users/samarthgayakhe/stocks and options/backend/logs/trading_app.log, level: INFO
+[2026-04-11 00:06:55] [INFO    ] [main]: ========== APPLICATION STARTING ==========
+[2026-04-11 00:06:56] [INFO    ] [main]: Database initialized.
+[2026-04-11 00:06:56] [INFO    ] [telegram_client]: Telegram connected. Listening to channel: -5009133651
+[2026-04-11 00:06:56] [INFO    ] [telegram_client]: Telegram listener started. Waiting for messages...
+[2026-04-11 00:06:56] [INFO    ] [main]: ========== APPLICATION READY ==========
+[2026-04-11 00:07:08] [INFO    ] [main]: LOGIN SUCCESS: user='admin', role='admin'
+[2026-04-11 00:07:23] [INFO    ] [main]: LOGIN SUCCESS: user='Sandeep', role='user'
+[2026-04-11 00:10:40] [INFO    ] [main]: ========== APPLICATION SHUTTING DOWN ==========
+[2026-04-11 00:10:44] [INFO    ] [logger]: Logging initialized — file: /Users/samarthgayakhe/stocks and options/backend/logs/trading_app.log, level: INFO
+[2026-04-11 00:10:44] [INFO    ] [main]: ========== APPLICATION STARTING ==========
+[2026-04-11 00:10:44] [INFO    ] [main]: Database initialized.
+[2026-04-11 00:10:45] [INFO    ] [telegram_client]: Telegram connected. Listening to channel: -5009133651
+[2026-04-11 00:10:45] [INFO    ] [telegram_client]: Telegram listener started. Waiting for messages...
+[2026-04-11 00:10:45] [INFO    ] [main]: ========== APPLICATION READY ==========
+[2026-04-11 00:11:03] [INFO    ] [main]: ========== APPLICATION SHUTTING DOWN ==========
+[2026-04-11 00:12:27] [INFO    ] [logger]: Logging initialized — file: /Users/samarthgayakhe/stocks and options/backend/logs/trading_app.log, level: INFO
+[2026-04-11 00:12:27] [INFO    ] [main]: ========== APPLICATION STARTING ==========
+[2026-04-11 00:12:27] [INFO    ] [main]: Database initialized.
+[2026-04-11 00:12:29] [INFO    ] [telegram_client]: Telegram connected. Listening to channel: -5009133651
+[2026-04-11 00:12:29] [INFO    ] [telegram_client]: Telegram listener started. Waiting for messages...
+[2026-04-11 00:12:29] [INFO    ] [main]: ========== APPLICATION READY ==========
+[2026-04-11 00:12:40] [WARNING ] [main]: LOGIN FAILED: user='Sandeep' — invalid credentials
+[2026-04-11 00:12:45] [INFO    ] [main]: LOGIN SUCCESS: user='Sandeep', role='user'
+[2026-04-11 00:12:58] [INFO    ] [main]: LOGIN SUCCESS: user='admin', role='admin'
+[2026-04-11 00:16:03] [INFO    ] [main]: ========== APPLICATION SHUTTING DOWN ==========
