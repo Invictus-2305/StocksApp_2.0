@@ -56,9 +56,15 @@ class AngelOneBroker(BaseBroker):
             if spoofed_ip:
                 logger.info(f"Angel One: Spoofing Public IP to '{spoofed_ip}' for client '{client_code}'")
                 
-                # Forcefully overwrite SmartConnect's hardcoded IP
+                # Generate a unique deterministic MAC address based on their client code
+                import hashlib
+                h = hashlib.md5(client_code.encode()).hexdigest()
+                fake_mac = ':'.join(h[i:i+2] for i in range(0, 12, 2))
+                
+                # Forcefully overwrite SmartConnect's hardcoded machine fingerprints
                 self.smart_api.clientPublicIp = spoofed_ip
                 self.smart_api.clientLocalIp = spoofed_ip
+                self.smart_api.clientMacAddress = fake_mac
                 
             if is_local_binding:
                 logger.info(f"Angel One: Binding outgoing network adapter to interface '{spoofed_ip}'")
